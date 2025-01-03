@@ -1,0 +1,722 @@
+[
+  {
+    "japanese_word": "男性",
+    "hiragana": "だんせい",
+    "meaning": "man",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "女性",
+    "hiragana": "じょせい",
+    "meaning": "woman",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "高齢",
+    "hiragana": "こうれい",
+    "meaning": "old age, advanced age",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "年上",
+    "hiragana": "としうえ",
+    "meaning": "elder",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "目上",
+    "hiragana": "めうえ",
+    "meaning": "superior",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "先輩",
+    "hiragana": "せんぱい",
+    "meaning": "senior",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "後輩",
+    "hiragana": "こうはい",
+    "meaning": "junior",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "上司",
+    "hiragana": "じょうし",
+    "meaning": "boss",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "相手",
+    "hiragana": "あいて",
+    "meaning": "other people, opponent",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "知り合い",
+    "hiragana": "しりあい",
+    "meaning": "acquaintance",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "友人",
+    "hiragana": "ゆうじん",
+    "meaning": "friend",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "仲",
+    "hiragana": "なか",
+    "meaning": "relations",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "生年月日",
+    "hiragana": "せいねんがっぴ",
+    "meaning": "date of birth",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "誕生",
+    "hiragana": "たんじょう",
+    "meaning": "birth",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "年",
+    "hiragana": "とし",
+    "meaning": "year, age",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "出身",
+    "hiragana": "しゅっしん",
+    "meaning": "origin, homeland",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "故郷",
+    "hiragana": "こきょう",
+    "meaning": "hometown",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "成長",
+    "hiragana": "せいちょう",
+    "meaning": "growth",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "成人",
+    "hiragana": "せいじん",
+    "meaning": "adult",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "合格",
+    "hiragana": "ごうかく",
+    "meaning": "passing, acceptance",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "進学",
+    "hiragana": "しんがく",
+    "meaning": "going to a higher school",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "退学",
+    "hiragana": "たいがく",
+    "meaning": "expulsion, dropping out",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "就職",
+    "hiragana": "しゅうしょく",
+    "meaning": "getting employed, finding employment",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "退職",
+    "hiragana": "たいしょく",
+    "meaning": "resignation, returement",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "失業",
+    "hiragana": "しつぎょう",
+    "meaning": "unemployment",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "残業",
+    "hiragana": "ざんぎょう",
+    "meaning": "overtime work",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "生活",
+    "hiragana": "せいかつ",
+    "meaning": "life",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "通勤",
+    "hiragana": "つうきん",
+    "meaning": "commuting (to work)",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "学歴",
+    "hiragana": "がくれき",
+    "meaning": "educational background",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "給料",
+    "hiragana": "きゅうりょう",
+    "meaning": "salary,pay",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "面接",
+    "hiragana": "めんせつ",
+    "meaning": "interview",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "休憩",
+    "hiragana": "きゅうけい",
+    "meaning": "break",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "観光",
+    "hiragana": "かんこう",
+    "meaning": "tourism, sightseeing",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "帰国",
+    "hiragana": "きこく",
+    "meaning": "returing to one’s country",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "帰省",
+    "hiragana": "きせい",
+    "meaning": "returing to one’s hometown",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "帰宅",
+    "hiragana": "きたく",
+    "meaning": "going home",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "参加",
+    "hiragana": "さんか",
+    "meaning": "participation",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "出席",
+    "hiragana": "しゅっせき",
+    "meaning": "attendance",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "欠席",
+    "hiragana": "けっせき",
+    "meaning": "absence",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "遅刻",
+    "hiragana": "ちこく",
+    "meaning": "arriving late",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "化粧",
+    "hiragana": "けしょう",
+    "meaning": "makeup",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "計算",
+    "hiragana": "けいさん",
+    "meaning": "calculation",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "計画",
+    "hiragana": "けいかく",
+    "meaning": "plan",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "成功",
+    "hiragana": "せいこう",
+    "meaning": "success",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "失敗",
+    "hiragana": "しっぱい",
+    "meaning": "failure",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "準備",
+    "hiragana": "じゅんび",
+    "meaning": "preparation",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "整理",
+    "hiragana": "せいり",
+    "meaning": "organizing, arrangement; disposal",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "注文",
+    "hiragana": "ちゅうもん",
+    "meaning": "order; request",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "貯金",
+    "hiragana": "ちょきん",
+    "meaning": "savings, depositing",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "徹夜",
+    "hiragana": "てつや",
+    "meaning": "staying up all night",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "引っ越し",
+    "hiragana": "ひっこし",
+    "meaning": "move",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "身長",
+    "hiragana": "しんちょう",
+    "meaning": "body height",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "体重",
+    "hiragana": "たいじゅう",
+    "meaning": "body weight",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "けが",
+    "hiragana": "けが",
+    "meaning": "injury",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "会",
+    "hiragana": "かい",
+    "meaning": "party",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "趣味",
+    "hiragana": "しゅみ",
+    "meaning": "hobby, interest; taste",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "興味",
+    "hiragana": "きょうみ",
+    "meaning": "interest",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "思い出",
+    "hiragana": "おもいで",
+    "meaning": "memory",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "冗談",
+    "hiragana": "じょうだん",
+    "meaning": "joke",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "目的",
+    "hiragana": "もくてき",
+    "meaning": "purpose",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "約束",
+    "hiragana": "やくそく",
+    "meaning": "promise, appointment",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "おしゃべり",
+    "hiragana": "おしゃべり",
+    "meaning": "chatting; talktativeness",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "遠慮",
+    "hiragana": "えんりょ",
+    "meaning": "reserve, refraining",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "我慢",
+    "hiragana": "がまん",
+    "meaning": "endurance, patience",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "迷惑",
+    "hiragana": "めいわく",
+    "meaning": "nuisance",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "希望",
+    "hiragana": "きぼう",
+    "meaning": "hope, wish",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "夢",
+    "hiragana": "ゆめ",
+    "meaning": "dream",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "賛成",
+    "hiragana": "さんせい",
+    "meaning": "agreement, support",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "反対",
+    "hiragana": "はんたい",
+    "meaning": "opposite, opposition",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "創造",
+    "hiragana": "そうぞう",
+    "meaning": "imagination",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "努力",
+    "hiragana": "どりょく",
+    "meaning": "effort",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "太陽",
+    "hiragana": "たいよう",
+    "meaning": "sun",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "地球",
+    "hiragana": "ちきゅう",
+    "meaning": "earth",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "温度",
+    "hiragana": "おんど",
+    "meaning": "temperature",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "湿度",
+    "hiragana": "しつど",
+    "meaning": "humidity",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "湿気",
+    "hiragana": "しっけ",
+    "meaning": "being humid, moisture",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "梅雨",
+    "hiragana": "つゆ",
+    "meaning": "rainy season",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "かび",
+    "hiragana": "かび",
+    "meaning": "mold",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "暖房",
+    "hiragana": "だんぼう",
+    "meaning": "heater",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "皮",
+    "hiragana": "かわ",
+    "meaning": "skin, hide",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "館",
+    "hiragana": "かん",
+    "meaning": "can",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "画面",
+    "hiragana": "がめん",
+    "meaning": "screen",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "番組",
+    "hiragana": "ばんぐみ",
+    "meaning": "(radio/TV) program",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "記事",
+    "hiragana": "きじ",
+    "meaning": "article( newspaper/magazine)",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "近所",
+    "hiragana": "きんじょ",
+    "meaning": "neighborhood",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "警察",
+    "hiragana": "けいさつ",
+    "meaning": "police",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "犯人",
+    "hiragana": "はんにん",
+    "meaning": "criminal",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "小銭",
+    "hiragana": "こぜに",
+    "meaning": "small change",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "ごちそう",
+    "hiragana": "ごちそう",
+    "meaning": "feast; treating to (a meal)",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "作者",
+    "hiragana": "さくしゃ",
+    "meaning": "writer, artist",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "作品",
+    "hiragana": "さくひん",
+    "meaning": "work (of art/literature)",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "制服",
+    "hiragana": "せいふく",
+    "meaning": "uniform",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "洗剤",
+    "hiragana": "せんざい",
+    "meaning": "detergent",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "底",
+    "hiragana": "そこ",
+    "meaning": "bottom",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "地下",
+    "hiragana": "ちか",
+    "meaning": "underground, basement",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "寺",
+    "hiragana": "てら",
+    "meaning": "temple",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "道路",
+    "hiragana": "どうろ",
+    "meaning": "road",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "坂",
+    "hiragana": "さか",
+    "meaning": "hill, slope",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "煙",
+    "hiragana": "けむり",
+    "meaning": "smoke",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "灰",
+    "hiragana": "はい",
+    "meaning": "ash",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "判",
+    "hiragana": "はん",
+    "meaning": "seal",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "名刺",
+    "hiragana": "めいし",
+    "meaning": "calling card, visiting card",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "免許",
+    "hiragana": "めんきょ",
+    "meaning": "license",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "多く",
+    "hiragana": "おおく",
+    "meaning": "many",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "前半",
+    "hiragana": "ぜんはん",
+    "meaning": "first half",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "後半",
+    "hiragana": "こうはん",
+    "meaning": "second half",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "最高",
+    "hiragana": "さいこう",
+    "meaning": "highest; best; really",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "最低",
+    "hiragana": "さいてい",
+    "meaning": "lowest; wrost; disgusting",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "最初",
+    "hiragana": "さいしょ",
+    "meaning": "first",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "最後",
+    "hiragana": "さいご",
+    "meaning": "last, end (of the line)",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "自動",
+    "hiragana": "じどう",
+    "meaning": "automation",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "種類",
+    "hiragana": "しゅるい",
+    "meaning": "type, kind",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "性格",
+    "hiragana": "せいかく",
+    "meaning": "personality, character",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "性質",
+    "hiragana": "せいしつ",
+    "meaning": "property; disposition",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "順番",
+    "hiragana": "じゅんばん",
+    "meaning": "order, sequence",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "番",
+    "hiragana": "ばん",
+    "meaning": "one’s turn; watching over",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "方法",
+    "hiragana": "ほうほう",
+    "meaning": "method, way",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "製品",
+    "hiragana": "せいひん",
+    "meaning": "product",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "値上がり",
+    "hiragana": "ねあがり",
+    "meaning": "price rise",
+    "lesson_id": 1
+  },
+  {
+    "japanese_word": "生",
+    "hiragana": "なま",
+    "meaning": "raw, draft (beer)",
+    "lesson_id": 1
+  }
+]
