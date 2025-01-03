@@ -8,10 +8,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FlashcardController {
     public static List<Vocabulary> vocabularyList;
+    public static FlashcardFunctionController flashcardFunctionController;
+
     private int currentCardIndex;
 
     @FXML
@@ -40,16 +43,56 @@ public class FlashcardController {
 
     @FXML
     public void initialize() {
+        setFlashcardFunction();
+
         if (vocabularyList != null && !vocabularyList.isEmpty()) {
             currentCardIndex = 0;
 
-            flashcardText.setText(vocabularyList.get(currentCardIndex).getVocabulary());
+            flashcardText.setText(getVocabularyText());
             autoResizeText(flashcardText, flashcardContainer);
 
             updateProgess();
         }
 
+        System.out.println("Check");
+
         setEventHandlers();
+    }
+
+    private void setFlashcardFunction() {
+
+        if (flashcardFunctionController.getReverseOrder()) {
+            Collections.reverse(vocabularyList);
+        }
+
+        if (flashcardFunctionController.getSpeakVocabulary()) {
+            //Not handle yet
+        }
+
+        if (flashcardFunctionController.getSoundFileName() != null) {
+            SoundPlayer soundPlayer = new SoundPlayer(
+                    flashcardFunctionController.getSoundFileName(), true, false);
+            soundPlayer.playSound();
+        }
+    }
+
+    private String getVocabularyText() {
+        String vocabularyText = "";
+
+        if (flashcardFunctionController.getShowKanji()) {
+            vocabularyText += vocabularyList.get(currentCardIndex).getVocabulary();
+        }
+
+        if (flashcardFunctionController.getShowHiragana()) {
+            vocabularyText += "(" + vocabularyList.get(currentCardIndex).getHiragana() + ")";
+        }
+
+        if (vocabularyList.get(currentCardIndex).getVocabulary().equals(
+                vocabularyList.get(currentCardIndex).getHiragana())) {
+            vocabularyText = vocabularyList.get(currentCardIndex).getHiragana();
+        }
+
+        return vocabularyText;
     }
 
     private void updateProgess() {
@@ -81,13 +124,15 @@ public class FlashcardController {
     private void flipCard() {
         String currentText = flashcardText.getText();
 
-        if (currentText.equals(vocabularyList.get(currentCardIndex).getVocabulary())) {
+        if (currentText.equals(getVocabularyText())) {
             String wordMeaning = vocabularyList.get(currentCardIndex).getMeaning();
             flashcardText.setText(wordMeaning);
 
-            EnglishTextToSpeech.getInstance().speakEnglishWords(wordMeaning);
+            if (flashcardFunctionController.getSpeakMeaning()) {
+                EnglishTextToSpeech.getInstance().speakEnglishWords(wordMeaning);
+            }
         } else {
-            flashcardText.setText(vocabularyList.get(currentCardIndex).getVocabulary());
+            flashcardText.setText(getVocabularyText());
         }
 
         autoResizeText(flashcardText, flashcardContainer);
@@ -96,7 +141,7 @@ public class FlashcardController {
     private void nextCard() {
         if (currentCardIndex < vocabularyList.size() - 1) {
             currentCardIndex++;
-            flashcardText.setText(vocabularyList.get(currentCardIndex).getVocabulary());
+            flashcardText.setText(getVocabularyText());
             autoResizeText(flashcardText, flashcardContainer);
 
             updateProgess();
@@ -106,7 +151,7 @@ public class FlashcardController {
     private void previousCard() {
         if (currentCardIndex > 0) {
             currentCardIndex--;
-            flashcardText.setText(vocabularyList.get(currentCardIndex).getVocabulary());
+            flashcardText.setText(getVocabularyText());
             autoResizeText(flashcardText, flashcardContainer);
 
             updateProgess();
@@ -115,6 +160,6 @@ public class FlashcardController {
 
     @FXML
     private void handleAudioIconClick(MouseEvent mouseEvent) {
-        //To do
+        //Not handle yet
     }
 }

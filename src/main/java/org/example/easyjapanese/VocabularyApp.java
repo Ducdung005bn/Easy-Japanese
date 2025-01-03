@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class VocabularyApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("VocabularyView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("VocabularyAppView.fxml"));
 
         Scene scene = new Scene(loader.load(), 800, 600);
         primaryStage.setTitle("Main View");
