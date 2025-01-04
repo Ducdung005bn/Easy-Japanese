@@ -8,4 +8,11 @@ public class QuizController {
 
     private SoundPlayer soundPlayer;
 
+    public SoundPlayer getSoundPlayer() {
+        return soundPlayer;
+    }
+
+    public void setSoundPlayer(SoundPlayer soundPlayer) {
+        this.soundPlayer = soundPlayer;
+    }
 }

@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
@@ -18,12 +17,10 @@ import java.io.IOException;
 public class QuizFunctionController {
     public static Pane parentContainer;
 
-    private static final String[] quizTypes = {"Fill in the blank using meanings"
-            , "Fill in the blank using pictures"};
+    private static final String[] quizTypes = {"Fill in the blank using meanings",
+            "Fill in the blank using pictures"};
 
     private boolean reverseOrder;
-    private boolean showKanji;
-    private boolean showHiragana;
     private String meaningLanguage;
     private String soundName;
     private String soundFilePath;
@@ -31,12 +28,6 @@ public class QuizFunctionController {
 
     @FXML
     private CheckBox reverseOrderCheckBox;
-
-    @FXML
-    private CheckBox showKanjiCheckBox;
-
-    @FXML
-    private CheckBox showHiraganaCheckBox;
 
     @FXML
     private ChoiceBox<String> meaningLanguageChoiceBox;
@@ -54,14 +45,6 @@ public class QuizFunctionController {
         return reverseOrder;
     }
 
-    public boolean getShowKanji() {
-        return showKanji;
-    }
-
-    public boolean getShowHiragana() {
-        return showHiragana;
-    }
-
     public String getSoundName() {
         return soundName;
     }
@@ -77,11 +60,9 @@ public class QuizFunctionController {
     @FXML
     public void initialize() {
         reverseOrderCheckBox.setSelected(false);
-        showKanjiCheckBox.setSelected(true);
-        showHiraganaCheckBox.setSelected(false);
 
         SoundPlayer.addValueToSoundChoiceBox(soundChoiceBox);
-        LingvaTranslate.addValueToMeaningLanguageChoiceBox(meaningLanguageChoiceBox);
+        LanguageHandler.addValueToMeaningLanguageChoiceBox(meaningLanguageChoiceBox);
         addValueToQuizTypeChoiceBox();
     }
 
@@ -97,26 +78,13 @@ public class QuizFunctionController {
     @FXML
     private void handleStartClick(MouseEvent event) {
         reverseOrder = reverseOrderCheckBox.isSelected();
-        showKanji = showKanjiCheckBox.isSelected();
-        showHiragana = showHiraganaCheckBox.isSelected();
         soundName = soundChoiceBox.getValue();
         meaningLanguage = meaningLanguageChoiceBox.getValue();
         quizType = quizTypeChoiceBox.getValue();
 
-        //Handle choice exception
-        if (!showKanji && !showHiragana) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("You must select at least one of the two: Show Kanji or Show Hiragana.");
-            alert.showAndWait();
-
-            return;
-        }
-
         if (!meaningLanguage.equals("English")) {
             try {
-                FlashcardFunctionController.handleMeaningLanguage(meaningLanguage, QuizController.class);
+                LanguageHandler.handleMeaningLanguage(meaningLanguage, QuizController.class);
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println(e.getMessage());
             }

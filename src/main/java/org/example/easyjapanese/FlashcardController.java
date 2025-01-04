@@ -34,7 +34,7 @@ public class FlashcardController {
     private ImageView audioIcon;
 
     @FXML
-    private Text progessText;
+    private Text progressText;
 
     @FXML
     private Slider volumeSlider;
@@ -59,7 +59,7 @@ public class FlashcardController {
             currentCardIndex = 0;
 
             flashcardText.setText(getVocabularyText());
-            autoResizeText(flashcardText, flashcardContainer);
+            InterfaceHandler.autoResizeText(flashcardText, 50, 48);
 
             updateProgess();
         }
@@ -118,20 +118,7 @@ public class FlashcardController {
         double progress = (double) (currentCardIndex + 1) / vocabularyList.size();
         progressBar.setProgress(progress);
 
-        progessText.setText("   " + String.valueOf(currentCardIndex + 1) + "/" + vocabularyList.size());
-    }
-
-    private void autoResizeText(Text text, BorderPane flashcardContainer) {
-        final int maxLength = 50;
-        final int standardFontSize = 48;
-        if (text.getText().length() <= maxLength) {
-            text.setFont(new javafx.scene.text.Font(standardFontSize));
-            return;
-        }
-
-        double fontSize = (double) (maxLength * standardFontSize) / text.getText().length();
-
-        text.setFont(new javafx.scene.text.Font(fontSize));
+        progressText.setText("   " + String.valueOf(currentCardIndex + 1) + "/" + vocabularyList.size());
     }
 
     private void setEventHandlers() {
@@ -154,7 +141,7 @@ public class FlashcardController {
             flashcardText.setText(getVocabularyText());
         }
 
-        autoResizeText(flashcardText, flashcardContainer);
+        InterfaceHandler.autoResizeText(flashcardText, 50, 48);
     }
 
     private void nextCard() {
@@ -163,7 +150,11 @@ public class FlashcardController {
 
             updateProgess();
 
-            cardEffectTransition();
+            InterfaceHandler.effectTransition(flashcardContainer,
+                    flashcardText,
+                    getVocabularyText(),
+                    50,
+                    48);
         }
     }
 
@@ -173,31 +164,16 @@ public class FlashcardController {
 
             updateProgess();
 
-            cardEffectTransition();
+            InterfaceHandler.effectTransition(flashcardContainer,
+                    flashcardText,
+                    getVocabularyText(),
+                    50,
+                    48);
         }
     }
 
-    private void cardEffectTransition() {
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), flashcardContainer);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.25);
-
-        fadeOut.setOnFinished(event -> {
-            flashcardText.setText(getVocabularyText());
-            autoResizeText(flashcardText, flashcardContainer);
-
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(500), flashcardContainer);
-            fadeIn.setFromValue(0.25);
-            fadeIn.setToValue(1.0);
-            fadeIn.play();
-        });
-
-        fadeOut.play();
-    }
-
-
     @FXML
     private void handleAudioIconClick(MouseEvent mouseEvent) {
-        //Not handle yet
+        //Always play the sound of the Japanese word
     }
 }

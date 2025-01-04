@@ -28,7 +28,7 @@
                         <Image url="@../../../pictureContainer/sound-on-flat.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="progessText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="368.1366958618164">
+                  <Text fx:id="progressText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="368.1366958618164">
                      <font>
                         <Font size="30.0" />
                      </font>

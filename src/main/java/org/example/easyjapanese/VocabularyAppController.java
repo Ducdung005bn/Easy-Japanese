@@ -147,7 +147,7 @@ public class VocabularyAppController {
         if (functionality.equals("Flashcard")) {
             FlashcardController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
         } else if (functionality.equals("Quiz")) {
-            //To do
+            FillUsingMeaningsController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
         }
 
     }

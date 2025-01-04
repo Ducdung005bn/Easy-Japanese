@@ -39,61 +39,39 @@
             </font>
         </Text>
         <CheckBox fx:id="reverseOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" />
-        <ImageView fitHeight="36.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-            <image>
-                <Image url="@../../../pictureContainer/kanji-icon.png" />
-            </image>
-        </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Show Kanji" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <CheckBox fx:id="showKanjiCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-            <image>
-                <Image url="@../../../pictureContainer/hiragana-icon.png" />
-            </image>
-        </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Show Hiragana" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <CheckBox fx:id="showHiraganaCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+        <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
             <image>
                 <Image url="@../../../pictureContainer/sound-on-flat.png" />
             </image>
         </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play Music" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play Music" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <font>
                 <Font size="16.0" />
             </font>
         </Text>
-        <ChoiceBox fx:id="soundChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <ChoiceBox fx:id="soundChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#handleStartClick" prefHeight="15.0" prefWidth="50.0" text="START" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
             <image>
                 <Image url="@../../../pictureContainer/language-icon.png" />
             </image>
         </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Set Meaning Language" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Set Meaning Language" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <font>
                 <Font size="16.0" />
             </font>
         </Text>
-        <ChoiceBox fx:id="meaningLanguageChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6">
+        <ChoiceBox fx:id="meaningLanguageChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
          <image>
             <Image url="@../../../pictureContainer/quiz-icon.png" />
          </image>
       </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Quiz Type" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Quiz Type" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="quizTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <ChoiceBox fx:id="quizTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
     </children>
 </GridPane>
