@@ -2,6 +2,7 @@ package org.example.easyjapanese;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
@@ -39,6 +40,23 @@ public class VocabularyAppController {
         itemMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal.getValue().equals("Flashcard")) {
                 showFlashcard(newVal);
+            } else if (newVal.getValue().equals("Quiz")) {
+                showQuiz(newVal);
+            }
+        });
+
+        //Set a front side for itemMenu
+        itemMenu.setCellFactory(treeView -> new TreeCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-font-size: 16px;");
+                }
             }
         });
     }
@@ -81,6 +99,39 @@ public class VocabularyAppController {
     }
 
     private void showFlashcard(TreeItem<String> newVal) {
+        setVocabularyList(newVal, "Flashcard");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FlashcardFunctionView.fxml"));
+            GridPane flashcardFunctionView = loader.load();
+
+            //To be able to clear FlashcardFunctionView to add FlashcardView
+            FlashcardFunctionController.parentContainer = contentPane;
+
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(flashcardFunctionView);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void showQuiz (TreeItem<String> newVal) {
+        setVocabularyList(newVal, "Quiz");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("QuizFunctionView.fxml"));
+            GridPane quizFunctionView = loader.load();
+
+            QuizFunctionController.parentContainer = contentPane;
+
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(quizFunctionView);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void setVocabularyList(TreeItem<String> newVal, String functionality) {
         TreeItem<String> unit = newVal.getParent();
         TreeItem<String> bookName = unit.getParent();
 
@@ -93,20 +144,12 @@ public class VocabularyAppController {
             }
         }
 
-        try {
+        if (functionality.equals("Flashcard")) {
             FlashcardController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FlashcardFunctionView.fxml"));
-            GridPane flashcardFunctionView = loader.load();
-
-            //To be able to clear FlashcardFunctionView to add FlashcardView
-            FlashcardFunctionController.parentContainer = contentPane;
-
-            contentPane.getChildren().clear();
-            contentPane.getChildren().add(flashcardFunctionView);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } else if (functionality.equals("Quiz")) {
+            //To do
         }
+
     }
 
     private List<Vocabulary> getVocabularyList(String bookISBN, int unit) {
@@ -122,7 +165,8 @@ public class VocabularyAppController {
                 vocabulary.setVocabularyID(Integer.parseInt(resultSet.getString("vocabularyID")));
                 vocabulary.setVocabulary(resultSet.getString("japaneseWord"));
                 vocabulary.setHiragana(resultSet.getString("hiragana"));
-                vocabulary.setMeaning(resultSet.getString("meaning"));
+                //Lingva translator will fail if there is "/".
+                vocabulary.setMeaning(resultSet.getString("meaning").replace("/", " or "));
                 vocabularyList.add(vocabulary);
             }
         } catch (SQLException e) {

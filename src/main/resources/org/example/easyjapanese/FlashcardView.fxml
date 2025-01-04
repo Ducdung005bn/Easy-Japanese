@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.easyjapanese.FlashcardController">
+<BorderPane prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.easyjapanese.FlashcardController">
    <center>
       <BorderPane fx:id="flashcardContainer" prefHeight="218.0" prefWidth="430.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2;">
          <center>
@@ -27,11 +28,12 @@
                         <Image url="@../../../pictureContainer/sound-on-flat.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="progessText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="505.4700393676758">
+                  <Text fx:id="progessText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="368.1366958618164">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Text>
+                  <Slider fx:id="volumeSlider" prefHeight="40.0" prefWidth="137.0" />
                </children>
             </HBox>
          </top>

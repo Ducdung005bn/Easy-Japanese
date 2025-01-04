@@ -17,6 +17,7 @@ public class EnglishTextToSpeech {
         voice = VoiceManager.getInstance().getVoice("kevin16");
         voice.allocate();
         voice.setPitch(120.0f);
+        voice.setVolume(120);
     }
 
     public static EnglishTextToSpeech getInstance() {

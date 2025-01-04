@@ -1,12 +1,18 @@
 package org.example.easyjapanese;
 
+import javafx.animation.FadeTransition;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +22,7 @@ public class FlashcardController {
     public static FlashcardFunctionController flashcardFunctionController;
 
     private int currentCardIndex;
+    private SoundPlayer soundPlayer;
 
     @FXML
     private ProgressBar progressBar;
@@ -28,6 +35,9 @@ public class FlashcardController {
 
     @FXML
     private Text progessText;
+
+    @FXML
+    private Slider volumeSlider;
 
     @FXML
     private Text flashcardText;
@@ -54,13 +64,16 @@ public class FlashcardController {
             updateProgess();
         }
 
-        System.out.println("Check");
-
         setEventHandlers();
+
+        if (flashcardFunctionController.getSoundName() != null) {
+            volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                soundPlayer.setVolume(newValue.doubleValue() / 100);
+            });
+        }
     }
 
     private void setFlashcardFunction() {
-
         if (flashcardFunctionController.getReverseOrder()) {
             Collections.reverse(vocabularyList);
         }
@@ -69,10 +82,14 @@ public class FlashcardController {
             //Not handle yet
         }
 
-        if (flashcardFunctionController.getSoundFileName() != null) {
-            SoundPlayer soundPlayer = new SoundPlayer(
-                    flashcardFunctionController.getSoundFileName(), true, false);
+        if (flashcardFunctionController.getSoundFilePath() != null) {
+            soundPlayer = new SoundPlayer(
+                    flashcardFunctionController.getSoundFilePath(), true, false);
             soundPlayer.playSound();
+
+            if (flashcardFunctionController.getSoundName() != null) {
+                volumeSlider.setValue(soundPlayer.getVolume() * 100);
+            }
         }
     }
 
@@ -81,10 +98,12 @@ public class FlashcardController {
 
         if (flashcardFunctionController.getShowKanji()) {
             vocabularyText += vocabularyList.get(currentCardIndex).getVocabulary();
-        }
 
-        if (flashcardFunctionController.getShowHiragana()) {
-            vocabularyText += "(" + vocabularyList.get(currentCardIndex).getHiragana() + ")";
+            if (flashcardFunctionController.getShowHiragana()) {
+                vocabularyText += " (" + vocabularyList.get(currentCardIndex).getHiragana() + ")";
+            }
+        } else {
+            vocabularyText += vocabularyList.get(currentCardIndex).getHiragana();
         }
 
         if (vocabularyList.get(currentCardIndex).getVocabulary().equals(
@@ -141,22 +160,41 @@ public class FlashcardController {
     private void nextCard() {
         if (currentCardIndex < vocabularyList.size() - 1) {
             currentCardIndex++;
-            flashcardText.setText(getVocabularyText());
-            autoResizeText(flashcardText, flashcardContainer);
 
             updateProgess();
+
+            cardEffectTransition();
         }
     }
 
     private void previousCard() {
         if (currentCardIndex > 0) {
             currentCardIndex--;
+
+            updateProgess();
+
+            cardEffectTransition();
+        }
+    }
+
+    private void cardEffectTransition() {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), flashcardContainer);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.25);
+
+        fadeOut.setOnFinished(event -> {
             flashcardText.setText(getVocabularyText());
             autoResizeText(flashcardText, flashcardContainer);
 
-            updateProgess();
-        }
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(500), flashcardContainer);
+            fadeIn.setFromValue(0.25);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+
+        fadeOut.play();
     }
+
 
     @FXML
     private void handleAudioIconClick(MouseEvent mouseEvent) {
