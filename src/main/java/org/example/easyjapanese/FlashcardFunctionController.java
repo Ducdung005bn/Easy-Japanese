@@ -69,6 +69,10 @@ public class FlashcardFunctionController {
         return showHiragana;
     }
 
+    public String getMeaningLanguage() {
+        return meaningLanguage;
+    }
+
     public String getSoundName() {
         return soundName;
     }
@@ -85,8 +89,31 @@ public class FlashcardFunctionController {
         showKanjiCheckBox.setSelected(true);
         showHiraganaCheckBox.setSelected(false);
 
+        showKanjiCheckBox.setOnAction(event -> {
+            checkBoxHandler(true, false);
+        });
+        showHiraganaCheckBox.setOnAction(event -> {
+            checkBoxHandler(false, true);
+        });
+
         SoundPlayer.addValueToSoundChoiceBox(soundChoiceBox);
         LanguageHandler.addValueToMeaningLanguageChoiceBox(meaningLanguageChoiceBox);
+    }
+
+    private void checkBoxHandler(boolean changeShowKanjiCheckBox, boolean changeShowHiraganaCheckBox) {
+        if (!showKanjiCheckBox.isSelected() && !showHiraganaCheckBox.isSelected()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("You must select at least one of the two: Show Kanji or Show Hiragana.");
+            alert.showAndWait();
+
+            if (changeShowKanjiCheckBox) {
+                showKanjiCheckBox.setSelected(true);
+            } else if (changeShowHiraganaCheckBox) {
+                showHiraganaCheckBox.setSelected(true);
+            }
+        }
     }
 
     @FXML
@@ -98,17 +125,6 @@ public class FlashcardFunctionController {
         showHiragana = showHiraganaCheckBox.isSelected();
         soundName = soundChoiceBox.getValue();
         meaningLanguage = meaningLanguageChoiceBox.getValue();
-
-        //Handle choice exception
-        if (!showKanji && !showHiragana) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("You must select at least one of the two: Show Kanji or Show Hiragana.");
-            alert.showAndWait();
-
-            return;
-        }
 
         if (!meaningLanguage.equals("English")) {
             speakMeaning = false;

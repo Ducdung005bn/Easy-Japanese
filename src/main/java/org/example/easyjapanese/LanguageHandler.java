@@ -66,7 +66,7 @@ public class LanguageHandler {
 
             List<Vocabulary> chunk = vocabularyList.subList(start, end);
             String meaningsToTranslate = String.join("|", chunk.stream()
-                    .map(Vocabulary::getMeaning)
+                    .map(Vocabulary::getEnglishMeaning)
                     .toArray(String[]::new));
 
             new Thread(() -> {
@@ -85,7 +85,7 @@ public class LanguageHandler {
                             }
                         }
 
-                        vocabularyList.get(start + j).setMeaning(meanings[j]);
+                        vocabularyList.get(start + j).setOtherLanguageMeaning(meanings[j]);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

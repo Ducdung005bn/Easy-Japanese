@@ -7,71 +7,82 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.easyjapanese.QuizFunctionController">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="309.33331298828125" minWidth="10.0" prefWidth="53.33335367838541" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.6666564941406" minWidth="10.0" prefWidth="342.00004069010413" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.3333129882813" minWidth="10.0" prefWidth="205.33329264322913" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints maxHeight="124.6666488647461" minHeight="9.333327293395996" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.99996185302734" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.99996185302734" minHeight="10.0" prefHeight="57.666666666666686" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <children>
-        <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../pictureContainer/shuffle-flat.png" />
-            </image>
-        </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reverse order" GridPane.columnIndex="1">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <CheckBox fx:id="reverseOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" />
-        <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-            <image>
-                <Image url="@../../../pictureContainer/sound-on-flat.png" />
-            </image>
-        </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play Music" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <ChoiceBox fx:id="soundChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#handleStartClick" prefHeight="15.0" prefWidth="50.0" text="START" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-            <image>
-                <Image url="@../../../pictureContainer/language-icon.png" />
-            </image>
-        </ImageView>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Set Meaning Language" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Text>
-        <ChoiceBox fx:id="meaningLanguageChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
-         <image>
-            <Image url="@../../../pictureContainer/quiz-icon.png" />
-         </image>
-      </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Quiz Type" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <ChoiceBox fx:id="quizTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-    </children>
-</GridPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.easyjapanese.QuizFunctionController">
+   <children>
+      <Pane prefHeight="214.0" prefWidth="600.0">
+         <children>
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="54.0" minWidth="10.0" prefWidth="54.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.6666564941406" minWidth="10.0" prefWidth="248.66668701171875" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.3333129882813" minWidth="10.0" prefWidth="298.6666463216145" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="50.0" minHeight="9.333327293395996" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../pictureContainer/shuffle-flat.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reverse order" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <CheckBox fx:id="reverseOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="2" />
+                  <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../../../pictureContainer/sound-on-flat.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play Music" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="soundChoiceBox" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../../../pictureContainer/language-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Set Meaning Language" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="meaningLanguageChoiceBox" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../../../pictureContainer/quiz-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Quiz Type" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="quizTypeChoiceBox" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane fx:id="specificQuizFunction" prefHeight="250.0" prefWidth="600.0" />
+      <Pane prefHeight="53.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="startButton" layoutX="300.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" prefHeight="15.0" prefWidth="50.0" text="START" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

@@ -120,7 +120,7 @@ public class VocabularyAppController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("QuizFunctionView.fxml"));
-            GridPane quizFunctionView = loader.load();
+            VBox quizFunctionView = loader.load();
 
             QuizFunctionController.parentContainer = contentPane;
 
@@ -147,7 +147,7 @@ public class VocabularyAppController {
         if (functionality.equals("Flashcard")) {
             FlashcardController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
         } else if (functionality.equals("Quiz")) {
-            FillUsingMeaningsController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
+            FillInTheBlankController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
         }
 
     }
@@ -166,7 +166,8 @@ public class VocabularyAppController {
                 vocabulary.setVocabulary(resultSet.getString("japaneseWord"));
                 vocabulary.setHiragana(resultSet.getString("hiragana"));
                 //Lingva translator will fail if there is "/".
-                vocabulary.setMeaning(resultSet.getString("meaning").replace("/", " or "));
+                vocabulary.setEnglishMeaning(resultSet.getString("meaning").replace("/", " or "));
+                vocabulary.setOtherLanguageMeaning(resultSet.getString("meaning").replace("/", " or "));
                 vocabularyList.add(vocabulary);
             }
         } catch (SQLException e) {

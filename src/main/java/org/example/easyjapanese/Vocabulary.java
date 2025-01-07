@@ -4,7 +4,8 @@ public class Vocabulary {
     private int vocabularyID;
     private String vocabulary;
     private String hiragana;
-    private String meaning;
+    private String englishMeaning;
+    private String otherLanguageMeaning;
     private int lessonID;
 
     public Vocabulary() {
@@ -14,12 +15,13 @@ public class Vocabulary {
     public Vocabulary(int vocabularyID,
                       String vocabulary,
                       String hiragana,
-                      String meaning,
+                      String englishMeaning,
                       int lessonID) {
         this.vocabularyID = vocabularyID;
         this.vocabulary = vocabulary;
         this.hiragana = hiragana;
-        this.meaning = meaning;
+        this.englishMeaning = englishMeaning;
+        this.otherLanguageMeaning = englishMeaning; //Haven't translated yet
         this.lessonID = lessonID;
     }
 
@@ -47,12 +49,12 @@ public class Vocabulary {
         this.hiragana = hiragana;
     }
 
-    public String getMeaning() {
-        return meaning;
+    public String getEnglishMeaning() {
+        return englishMeaning;
     }
 
-    public void setMeaning(String meaning) {
-        this.meaning = meaning;
+    public void setEnglishMeaning(String englishMeaning) {
+        this.englishMeaning = englishMeaning;
     }
 
     public int getLessonID() {
@@ -61,5 +63,21 @@ public class Vocabulary {
 
     public void setLessonID(int lessonID) {
         this.lessonID = lessonID;
+    }
+
+    public String getOtherLanguageMeaning() {
+        return otherLanguageMeaning;
+    }
+
+    public void setOtherLanguageMeaning(String otherLanguageMeaning) {
+        this.otherLanguageMeaning = otherLanguageMeaning;
+    }
+
+    public String getMeaning(boolean isEnglishMeaning) {
+        if (isEnglishMeaning) {
+            return englishMeaning;
+        } else {
+            return otherLanguageMeaning;
+        }
     }
 }

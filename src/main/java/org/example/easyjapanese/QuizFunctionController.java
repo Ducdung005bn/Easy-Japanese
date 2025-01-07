@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -17,8 +16,7 @@ import java.io.IOException;
 public class QuizFunctionController {
     public static Pane parentContainer;
 
-    private static final String[] quizTypes = {"Fill in the blank using meanings",
-            "Fill in the blank using pictures"};
+    public static final String[] quizTypes = {"Fill in the blank"};
 
     private boolean reverseOrder;
     private String meaningLanguage;
@@ -39,10 +37,17 @@ public class QuizFunctionController {
     private ChoiceBox<String> quizTypeChoiceBox;
 
     @FXML
+    private Pane specificQuizFunction;
+
+    @FXML
     private Button startButton;
 
     public boolean getReverseOrder() {
         return reverseOrder;
+    }
+
+    public String getMeaningLanguage() {
+        return meaningLanguage;
     }
 
     public String getSoundName() {
@@ -64,6 +69,28 @@ public class QuizFunctionController {
         SoundPlayer.addValueToSoundChoiceBox(soundChoiceBox);
         LanguageHandler.addValueToMeaningLanguageChoiceBox(meaningLanguageChoiceBox);
         addValueToQuizTypeChoiceBox();
+
+        updateSpecificQuizFunction(quizTypes[0]);
+        quizTypeChoiceBox.setOnAction(e -> {
+            String selectedQuizType = quizTypeChoiceBox.getValue();
+            updateSpecificQuizFunction(selectedQuizType);
+        });
+    }
+
+    private void updateSpecificQuizFunction(String selectedQuizType) {
+        specificQuizFunction.getChildren().clear();
+
+        Pane newPane = null;
+
+        try {
+            if (selectedQuizType.equals(quizTypes[0])) {
+                newPane = new FXMLLoader((getClass().getResource("FillInTheBlankFunctionView.fxml"))).load();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        specificQuizFunction.getChildren().add(newPane);
     }
 
     private void addValueToQuizTypeChoiceBox() {
@@ -114,9 +141,7 @@ public class QuizFunctionController {
         try {
             String fxmlFilePath = null;
             if (quizType.equals(QuizFunctionController.quizTypes[0])) {
-                fxmlFilePath = "FillUsingMeanings.fxml";
-            } else if (quizType.equals(QuizFunctionController.quizTypes[1])) {
-                fxmlFilePath = "FillUsingPictures.fxml";
+                fxmlFilePath = "FillInTheBlankView.fxml";
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));

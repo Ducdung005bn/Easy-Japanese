@@ -1,18 +1,13 @@
 package org.example.easyjapanese;
 
-import javafx.animation.FadeTransition;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +18,7 @@ public class FlashcardController {
 
     private int currentCardIndex;
     private SoundPlayer soundPlayer;
+    private boolean isEnglishMeaning = true;
 
     @FXML
     private ProgressBar progressBar;
@@ -74,6 +70,8 @@ public class FlashcardController {
     }
 
     private void setFlashcardFunction() {
+        isEnglishMeaning = flashcardFunctionController.getMeaningLanguage().equals("English");
+
         if (flashcardFunctionController.getReverseOrder()) {
             Collections.reverse(vocabularyList);
         }
@@ -131,7 +129,7 @@ public class FlashcardController {
         String currentText = flashcardText.getText();
 
         if (currentText.equals(getVocabularyText())) {
-            String wordMeaning = vocabularyList.get(currentCardIndex).getMeaning();
+            String wordMeaning = vocabularyList.get(currentCardIndex).getMeaning(isEnglishMeaning);
             flashcardText.setText(wordMeaning);
 
             if (flashcardFunctionController.getSpeakMeaning()) {
