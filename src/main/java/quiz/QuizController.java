@@ -1,4 +1,7 @@
-package org.example.easyjapanese;
+package quiz;
+
+import org.example.easyjapanese.Vocabulary;
+import utils.SoundPlayer;
 
 import java.util.List;
 

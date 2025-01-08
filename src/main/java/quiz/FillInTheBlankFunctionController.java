@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package quiz;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

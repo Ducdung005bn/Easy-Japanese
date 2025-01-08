@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package quiz;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -15,6 +15,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import utils.InterfaceHandler;
+import utils.PixabayImageSearcher;
+import utils.SoundPlayer;
 
 import java.util.Collections;
 import java.util.List;

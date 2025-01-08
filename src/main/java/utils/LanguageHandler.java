@@ -1,8 +1,9 @@
-package org.example.easyjapanese;
+package utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
+import org.example.easyjapanese.Vocabulary;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -6,15 +6,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.25" prefHeight="400.0" prefWidth="600.0"
-           xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="org.example.easyjapanese.VocabularyAppController">
+<SplitPane dividerPositions="0.16924286088551216" prefHeight="725.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.easyjapanese.VocabularyAppController">
 
     <!-- Left side -->
-    <VBox alignment="TOP_LEFT" prefWidth="200" spacing="10">
+    <VBox alignment="TOP_LEFT" prefHeight="397.0" prefWidth="116.0" spacing="10">
         <children>
-            <TreeView fx:id="itemMenu" prefHeight="825.0" prefWidth="296.0">
+            <TreeView fx:id="itemMenu" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="212.0">
                 <effect>
                     <InnerShadow />
                 </effect>
@@ -23,6 +20,6 @@
     </VBox>
 
     <!-- Right side -->
-    <Pane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0" />
+    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1063.0" />
 
 </SplitPane>

@@ -5,62 +5,66 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.easyjapanese.FlashcardController">
-   <center>
-      <BorderPane fx:id="flashcardContainer" prefHeight="218.0" prefWidth="430.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2;">
-         <center>
-            <Text fx:id="flashcardText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="TEXT" textAlignment="CENTER" wrappingWidth="327.92704010009766" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="Arial Narrow Bold" size="48.0" />
-               </font>
-            </Text>
-         </center>
-         <top>
-            <HBox prefHeight="35.0" prefWidth="546.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ImageView fx:id="audioIcon" fitHeight="40.0" fitWidth="49.0" onMouseClicked="#handleAudioIconClick" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../pictureContainer/sound-on-flat.png" />
-                     </image>
-                  </ImageView>
-                  <Text fx:id="progressText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="368.1366958618164">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1063.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcard.FlashcardController">
+   <children>
+      <ProgressBar fx:id="progressBar" prefHeight="30.0" prefWidth="1063.0" progress="0.0" />
+      <AnchorPane prefHeight="725.0" prefWidth="1063.0">
+         <children>
+            <BorderPane fx:id="flashcardContainer" layoutX="255.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="553.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2;">
+               <center>
+                  <Text fx:id="flashcardText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="TEXT" textAlignment="CENTER" wrappingWidth="327.92704010009766" BorderPane.alignment="CENTER">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="Arial Narrow Bold" size="48.0" />
                      </font>
                   </Text>
-                  <Slider fx:id="volumeSlider" prefHeight="40.0" prefWidth="137.0" />
-               </children>
-            </HBox>
-         </top>
-         <bottom>
-            <HBox prefHeight="46.0" prefWidth="546.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="previousButton" mnemonicParsing="false" prefHeight="46.0" prefWidth="100.0" text="⇦">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="flipButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="350.0" text="FLIP" textAlignment="CENTER">
-                     <font>
-                        <Font name="Arial Narrow Bold" size="18.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="nextButton" mnemonicParsing="false" prefHeight="46.0" prefWidth="100.0" text="⇨" textAlignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
-      </BorderPane>
-   </center>
-   <top>
-      <ProgressBar fx:id="progressBar" prefHeight="13.0" prefWidth="599.0" progress="0.0" BorderPane.alignment="CENTER" />
-   </top>
-</BorderPane>
+               </center>
+               <top>
+                  <HBox prefHeight="35.0" prefWidth="546.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="audioIcon" fitHeight="40.0" fitWidth="49.0" onMouseClicked="#handleAudioIconClick" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../pictureContainer/sound-on-flat.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="progressText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="367.4700698852539">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Text>
+                        <Slider fx:id="volumeSlider" prefHeight="40.0" prefWidth="137.0" />
+                     </children>
+                  </HBox>
+               </top>
+               <bottom>
+                  <HBox prefHeight="46.0" prefWidth="546.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="previousButton" mnemonicParsing="false" prefHeight="46.0" prefWidth="100.0" text="⇦">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="flipButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="350.0" text="FLIP" textAlignment="CENTER">
+                           <font>
+                              <Font name="Arial Narrow Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="nextButton" mnemonicParsing="false" prefHeight="46.0" prefWidth="100.0" text="⇨" textAlignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

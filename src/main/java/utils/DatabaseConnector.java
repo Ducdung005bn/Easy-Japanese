@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package utils;
 
 import java.sql.*;
 

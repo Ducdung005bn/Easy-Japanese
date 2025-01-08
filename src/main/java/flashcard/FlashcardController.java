@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package flashcard;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +8,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import org.example.easyjapanese.Vocabulary;
+import utils.EnglishTextToSpeech;
+import utils.InterfaceHandler;
+import utils.SoundPlayer;
 
 import java.util.Collections;
 import java.util.List;

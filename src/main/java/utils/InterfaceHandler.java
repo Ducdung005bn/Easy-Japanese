@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package utils;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.layout.Pane;

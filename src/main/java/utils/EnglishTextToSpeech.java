@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package utils;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;

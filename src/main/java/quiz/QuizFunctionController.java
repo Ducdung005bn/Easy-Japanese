@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package quiz;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +9,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import utils.LanguageHandler;
+import utils.SoundPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +86,7 @@ public class QuizFunctionController {
 
         try {
             if (selectedQuizType.equals(quizTypes[0])) {
-                newPane = new FXMLLoader((getClass().getResource("FillInTheBlankFunctionView.fxml"))).load();
+                newPane = new FXMLLoader((getClass().getResource("/org/example/easyjapanese/FillInTheBlankFunctionView.fxml"))).load();
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -141,7 +143,7 @@ public class QuizFunctionController {
         try {
             String fxmlFilePath = null;
             if (quizType.equals(QuizFunctionController.quizTypes[0])) {
-                fxmlFilePath = "FillInTheBlankView.fxml";
+                fxmlFilePath = "/org/example/easyjapanese/FillInTheBlankView.fxml";
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));

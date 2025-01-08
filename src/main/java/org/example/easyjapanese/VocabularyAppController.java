@@ -1,11 +1,16 @@
 package org.example.easyjapanese;
 
+import flashcard.FlashcardController;
+import flashcard.FlashcardFunctionController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
+import quiz.FillInTheBlankController;
+import quiz.QuizFunctionController;
+import utils.DatabaseConnector;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,8 +18,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
-import static java.lang.Math.abs;
 
 public class VocabularyAppController {
     private final Map<String, Map<Integer, List<Integer>>> menuData = createMenuData();
@@ -42,6 +45,25 @@ public class VocabularyAppController {
                 showFlashcard(newVal);
             } else if (newVal.getValue().equals("Quiz")) {
                 showQuiz(newVal);
+            } else if (newVal.getValue().equals("Word List")) {
+
+
+
+
+
+
+                //EXAMPLE
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/MonsterHunterView.fxml"));
+                    StackPane example = loader.load();
+
+                    contentPane.getChildren().clear();
+                    contentPane.getChildren().add(example);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //EXAMPLE
+
             }
         });
 
@@ -86,7 +108,7 @@ public class VocabularyAppController {
                 case 0: return "Flashcard";
                 case 1: return "Quiz";
                 case 2: return "Word List";
-                case 3: return "Word List PDF";
+                case 3: return "PDF";
                 case 4: return "Question And Answer";
             }
         }
@@ -102,7 +124,7 @@ public class VocabularyAppController {
         setVocabularyList(newVal, "Flashcard");
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FlashcardFunctionView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/FlashcardFunctionView.fxml"));
             GridPane flashcardFunctionView = loader.load();
 
             //To be able to clear FlashcardFunctionView to add FlashcardView
@@ -119,7 +141,7 @@ public class VocabularyAppController {
         setVocabularyList(newVal, "Quiz");
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("QuizFunctionView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/QuizFunctionView.fxml"));
             VBox quizFunctionView = loader.load();
 
             QuizFunctionController.parentContainer = contentPane;

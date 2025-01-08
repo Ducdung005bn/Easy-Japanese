@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package flashcard;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import utils.LanguageHandler;
+import utils.SoundPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -158,8 +161,8 @@ public class FlashcardFunctionController {
         FlashcardController.flashcardFunctionController = this; //Must place there, before declaring loader
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FlashcardView.fxml"));
-            BorderPane flashcardView = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/FlashcardView.fxml"));
+            VBox flashcardView = loader.load();
 
             //Replace flashcardFunctionView by flashcardView
             parentContainer.getChildren().clear();

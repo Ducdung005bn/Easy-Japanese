@@ -10,4 +10,10 @@ module org.example.easyjapanese {
 
     opens org.example.easyjapanese to javafx.fxml;
     exports org.example.easyjapanese;
+    exports utils;
+    opens utils to javafx.fxml;
+    exports quiz;
+    opens quiz to javafx.fxml;
+    exports flashcard;
+    opens flashcard to javafx.fxml;
 }

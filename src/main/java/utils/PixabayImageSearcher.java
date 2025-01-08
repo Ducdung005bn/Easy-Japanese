@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

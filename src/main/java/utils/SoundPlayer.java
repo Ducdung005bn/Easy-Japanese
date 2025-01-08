@@ -1,7 +1,6 @@
-package org.example.easyjapanese;
+package utils;
 
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
