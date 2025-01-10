@@ -14,20 +14,21 @@ import utils.SoundPlayer;
 
 import java.io.File;
 import java.io.IOException;
+import org.example.easyjapanese.Quiz;
 
 public class QuizFunctionController {
     public static Pane parentContainer;
 
     public static final String[] quizTypes = {"Fill in the blank"};
 
-    private boolean reverseOrder;
+    private boolean shuffleOrder;
     private String meaningLanguage;
     private String soundName;
     private String soundFilePath;
     private String quizType;
 
     @FXML
-    private CheckBox reverseOrderCheckBox;
+    private CheckBox shuffleOrderCheckBox;
 
     @FXML
     private ChoiceBox<String> meaningLanguageChoiceBox;
@@ -44,8 +45,8 @@ public class QuizFunctionController {
     @FXML
     private Button startButton;
 
-    public boolean getReverseOrder() {
-        return reverseOrder;
+    public boolean getShuffleOrder() {
+        return shuffleOrder;
     }
 
     public String getMeaningLanguage() {
@@ -66,7 +67,7 @@ public class QuizFunctionController {
 
     @FXML
     public void initialize() {
-        reverseOrderCheckBox.setSelected(false);
+        shuffleOrderCheckBox.setSelected(false);
 
         SoundPlayer.addValueToSoundChoiceBox(soundChoiceBox);
         LanguageHandler.addValueToMeaningLanguageChoiceBox(meaningLanguageChoiceBox);
@@ -106,14 +107,20 @@ public class QuizFunctionController {
 
     @FXML
     private void handleStartClick(MouseEvent event) {
-        reverseOrder = reverseOrderCheckBox.isSelected();
+        shuffleOrder = shuffleOrderCheckBox.isSelected();
         soundName = soundChoiceBox.getValue();
         meaningLanguage = meaningLanguageChoiceBox.getValue();
         quizType = quizTypeChoiceBox.getValue();
 
         if (!meaningLanguage.equals("English")) {
             try {
-                LanguageHandler.handleMeaningLanguage(meaningLanguage, QuizController.class);
+                LanguageHandler.handleMeaningLanguage(
+                        meaningLanguage,
+                        QuizController.class,
+                        "quiz",
+                        Quiz::getQuestion,
+                        Quiz::setOtherInformation
+                );
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println(e.getMessage());
             }

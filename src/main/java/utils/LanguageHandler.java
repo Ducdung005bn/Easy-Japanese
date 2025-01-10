@@ -3,7 +3,6 @@ package utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
-import org.example.easyjapanese.Vocabulary;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +10,8 @@ import org.jsoup.nodes.Document;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class LanguageHandler {
     //For translating from sourceLanguage to targetLanguage
@@ -50,24 +51,30 @@ public class LanguageHandler {
         meaningLanguageChoiceBox.setValue("English");
     }
 
-    public static void handleMeaningLanguage(String meaningLanguage, Class<?> clazz) throws NoSuchFieldException, IllegalAccessException {
+    public static <T> void handleMeaningLanguage(
+            String meaningLanguage,
+            Class<?> clazz,
+            String type,
+            Function<T, String> getMeaning,
+            BiConsumer<T, String> setOtherInformation
+    ) throws NoSuchFieldException, IllegalAccessException {
         final int MAX_WORDS_PER_REQUEST = 60;
         final int REQUEST_DELAY_MS = 1000;
 
         LanguageHandler.targetLanguage = meaningLanguage;
 
-        List<Vocabulary> vocabularyList = (List<Vocabulary>) clazz.getField("vocabularyList").get(null);
+        List<T> itemList = (List<T>) clazz.getField(type.equals("vocabulary") ? "vocabularyList" : "quizList").get(null);
 
-        int totalWords = vocabularyList.size();
-        int numberOfRequests = (int) Math.ceil((double) totalWords / MAX_WORDS_PER_REQUEST);
+        int totalItems = itemList.size();
+        int numberOfRequests = (int) Math.ceil((double) totalItems / MAX_WORDS_PER_REQUEST);
 
         for (int i = 0; i < numberOfRequests; i++) {
             int start = i * MAX_WORDS_PER_REQUEST;
-            int end = Math.min(start + MAX_WORDS_PER_REQUEST, totalWords);
+            int end = Math.min(start + MAX_WORDS_PER_REQUEST, totalItems);
 
-            List<Vocabulary> chunk = vocabularyList.subList(start, end);
+            List<T> chunk = itemList.subList(start, end);
             String meaningsToTranslate = String.join("|", chunk.stream()
-                    .map(Vocabulary::getEnglishMeaning)
+                    .map(getMeaning)
                     .toArray(String[]::new));
 
             new Thread(() -> {
@@ -85,8 +92,7 @@ public class LanguageHandler {
                                 meanings[j] = firstPart;
                             }
                         }
-
-                        vocabularyList.get(start + j).setOtherLanguageMeaning(meanings[j]);
+                        setOtherInformation.accept(chunk.get(j), meanings[j]);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -100,6 +106,7 @@ public class LanguageHandler {
             }
         }
     }
+
 
     private static Map<String, String> setLanguageCodeMap() {
         Map<String, String> languageCodeMap = new HashMap<>();

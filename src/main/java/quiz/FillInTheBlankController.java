@@ -29,7 +29,6 @@ public class FillInTheBlankController extends QuizController {
     public static FillInTheBlankFunctionController fillInTheBlankFunctionController;
 
     private int currentQuizIndex;
-    private boolean isEnglishMeaning = true;
     private boolean isShowingFeedback = false; //To handle no pressing submit button
 
     Timeline timeline;
@@ -68,7 +67,7 @@ public class FillInTheBlankController extends QuizController {
     public void initialize() {
         setQuizFunction();
 
-        if (vocabularyList != null && !vocabularyList.isEmpty()) {
+        if (quizList != null && !quizList.isEmpty()) {
             currentQuizIndex = 0;
 
             feedbackText.setText("");
@@ -90,10 +89,8 @@ public class FillInTheBlankController extends QuizController {
     }
 
     private void setQuizFunction() {
-        isEnglishMeaning = quizFunctionController.getMeaningLanguage().equals("English");
-
-        if (quizFunctionController.getReverseOrder()) {
-            Collections.reverse(vocabularyList);
+        if (quizFunctionController.getShuffleOrder()) {
+            Collections.shuffle(quizList);
         }
 
         if (quizFunctionController.getSoundFilePath() != null) {
@@ -104,6 +101,8 @@ public class FillInTheBlankController extends QuizController {
             if (quizFunctionController.getSoundName() != null) {
                 volumeSlider.setValue(getSoundPlayer().getVolume() * 100);
             }
+
+            InterfaceHandler.soundPlayerList.add(getSoundPlayer());
         }
     }
 
@@ -116,17 +115,16 @@ public class FillInTheBlankController extends QuizController {
         String answer = answerTextField.getText();
         String correctAnswer = null;
 
-        String kanji = vocabularyList.get(currentQuizIndex).getVocabulary();
-        String hiragana = vocabularyList.get(currentQuizIndex).getHiragana();
+        String firstAnswer = quizList.get(currentQuizIndex).getAnswerFirstChoice();
+        String secondAnswer = quizList.get(currentQuizIndex).getAnswerSecondChoice();
 
-        if (!kanji.equals(hiragana)) {
-            correctAnswer = kanji + "/" + hiragana;
+        if (!firstAnswer.equals(secondAnswer) && secondAnswer != null) {
+            correctAnswer = firstAnswer + " / " + secondAnswer;
         } else {
-            correctAnswer = hiragana;
+            correctAnswer = firstAnswer;
         }
 
-        if (answer.equals(vocabularyList.get(currentQuizIndex).getVocabulary())
-                || answer.equals(vocabularyList.get(currentQuizIndex).getHiragana())) {
+        if (quizList.get(currentQuizIndex).isCorrectAnswer(answer)) {
             showFeedback("Correct", true);
         } else {
             showFeedback("Incorrect. Correct answer: " + correctAnswer, false);
@@ -163,7 +161,7 @@ public class FillInTheBlankController extends QuizController {
     }
 
     private void moveToNextQuiz() {
-        if (currentQuizIndex < vocabularyList.size() - 1) {
+        if (currentQuizIndex < quizList.size() - 1) {
             currentQuizIndex++;
             answerTextField.setText("");
 
@@ -191,7 +189,7 @@ public class FillInTheBlankController extends QuizController {
         List<String> imageUrlList = null;
 
         FutureTask<List<String>> futureTask = new FutureTask<>(() ->
-                PixabayImageSearcher.getImage(vocabularyList.get(currentQuizIndex).getEnglishMeaning()));
+                PixabayImageSearcher.getImage(quizList.get(currentQuizIndex).getQuestion()));
 
         new Thread(futureTask).start();
 
@@ -241,7 +239,7 @@ public class FillInTheBlankController extends QuizController {
     private void showMeaning() {
         Text questionText = new Text();
 
-        questionText.setText(vocabularyList.get(currentQuizIndex).getMeaning(isEnglishMeaning));
+        questionText.setText(quizList.get(currentQuizIndex).getOtherInformation());
         questionText.setFill(Color.RED);
         questionText.setFont(new Font(48.0));
 
@@ -273,10 +271,10 @@ public class FillInTheBlankController extends QuizController {
     }
 
     private void updateProgess() {
-        double progress = (double) (currentQuizIndex + 1) / vocabularyList.size();
+        double progress = (double) (currentQuizIndex + 1) / quizList.size();
         progressBar.setProgress(progress);
 
-        progressText.setText("   " + String.valueOf(currentQuizIndex + 1) + "/" + vocabularyList.size());
+        progressText.setText("   " + String.valueOf(currentQuizIndex + 1) + "/" + quizList.size());
     }
 
     private void updateTimeBar() {
@@ -284,8 +282,8 @@ public class FillInTheBlankController extends QuizController {
         int timeLimit = fillInTheBlankFunctionController.getTimeLimit();
 
         timeline = new Timeline(
-                new KeyFrame(Duration.millis(50), event -> {
-                    double progress = timeBar.getProgress() - (1.0 / timeLimit) * (50.0 / 1000.0);
+                new KeyFrame(Duration.millis(100.0), event -> {
+                    double progress = timeBar.getProgress() - (1.0 / timeLimit) * (100.0 / 1000.0);
                     if (progress <= 0) {
                         submitButtonHandler();
                     }

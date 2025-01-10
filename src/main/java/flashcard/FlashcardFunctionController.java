@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import utils.LanguageHandler;
@@ -15,11 +14,12 @@ import utils.SoundPlayer;
 
 import java.io.File;
 import java.io.IOException;
+import org.example.easyjapanese.Vocabulary;
 
 public class FlashcardFunctionController {
     public static Pane parentContainer;
 
-    private boolean reverseOrder;
+    private boolean shuffleOrder;
     private boolean speakMeaning;
     private boolean speakVocabulary;
     private boolean showKanji;
@@ -29,7 +29,7 @@ public class FlashcardFunctionController {
     private String soundFilePath;
 
     @FXML
-    private CheckBox reverseOrderCheckBox;
+    private CheckBox shuffleOrderCheckBox;
 
     @FXML
     private CheckBox speakVocabularyCheckBox;
@@ -52,8 +52,8 @@ public class FlashcardFunctionController {
     @FXML
     private Button startButton;
 
-    public boolean getReverseOrder() {
-        return reverseOrder;
+    public boolean getShuffleOrder() {
+        return shuffleOrder;
     }
 
     public boolean getSpeakMeaning() {
@@ -86,7 +86,7 @@ public class FlashcardFunctionController {
 
     @FXML
     public void initialize() {
-        reverseOrderCheckBox.setSelected(false);
+        shuffleOrderCheckBox.setSelected(false);
         speakVocabularyCheckBox.setSelected(false);
         speakMeaningCheckBox.setSelected(true);
         showKanjiCheckBox.setSelected(true);
@@ -121,7 +121,7 @@ public class FlashcardFunctionController {
 
     @FXML
     private void handleStartClick(MouseEvent event) {
-        reverseOrder = reverseOrderCheckBox.isSelected();
+        shuffleOrder = shuffleOrderCheckBox.isSelected();
         speakMeaning = speakMeaningCheckBox.isSelected();
         speakVocabulary = speakVocabularyCheckBox.isSelected();
         showKanji = showKanjiCheckBox.isSelected();
@@ -133,7 +133,13 @@ public class FlashcardFunctionController {
             speakMeaning = false;
 
             try {
-                LanguageHandler.handleMeaningLanguage(meaningLanguage, FlashcardController.class);
+                LanguageHandler.handleMeaningLanguage(
+                        meaningLanguage,
+                        FlashcardController.class,
+                        "vocabulary",
+                        Vocabulary::getEnglishMeaning,
+                        Vocabulary::setOtherInformation
+                );
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println(e.getMessage());
             }

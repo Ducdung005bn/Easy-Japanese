@@ -22,7 +22,6 @@ public class FlashcardController {
 
     private int currentCardIndex;
     private SoundPlayer soundPlayer;
-    private boolean isEnglishMeaning = true;
 
     @FXML
     private ProgressBar progressBar;
@@ -74,10 +73,8 @@ public class FlashcardController {
     }
 
     private void setFlashcardFunction() {
-        isEnglishMeaning = flashcardFunctionController.getMeaningLanguage().equals("English");
-
-        if (flashcardFunctionController.getReverseOrder()) {
-            Collections.reverse(vocabularyList);
+        if (flashcardFunctionController.getShuffleOrder()) {
+            Collections.shuffle(vocabularyList);
         }
 
         if (flashcardFunctionController.getSpeakVocabulary()) {
@@ -92,6 +89,8 @@ public class FlashcardController {
             if (flashcardFunctionController.getSoundName() != null) {
                 volumeSlider.setValue(soundPlayer.getVolume() * 100);
             }
+
+            InterfaceHandler.soundPlayerList.add(soundPlayer);
         }
     }
 
@@ -133,7 +132,7 @@ public class FlashcardController {
         String currentText = flashcardText.getText();
 
         if (currentText.equals(getVocabularyText())) {
-            String wordMeaning = vocabularyList.get(currentCardIndex).getMeaning(isEnglishMeaning);
+            String wordMeaning = vocabularyList.get(currentCardIndex).getOtherInformation();
             flashcardText.setText(wordMeaning);
 
             if (flashcardFunctionController.getSpeakMeaning()) {

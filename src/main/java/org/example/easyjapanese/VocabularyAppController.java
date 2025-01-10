@@ -8,9 +8,11 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
-import quiz.FillInTheBlankController;
+import quiz.MonsterHunterController;
+import quiz.QuizController;
 import quiz.QuizFunctionController;
 import utils.DatabaseConnector;
+import utils.InterfaceHandler;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -41,6 +43,8 @@ public class VocabularyAppController {
 
         // Add a listener to handle item selection in the TreeView
         itemMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            InterfaceHandler.removeAllRemainings(); //remove all sounds and timelines
+
             if (newVal.getValue().equals("Flashcard")) {
                 showFlashcard(newVal);
             } else if (newVal.getValue().equals("Quiz")) {
@@ -48,8 +52,20 @@ public class VocabularyAppController {
             } else if (newVal.getValue().equals("Word List")) {
 
 
+                List<Quiz> quizList = new ArrayList<>();
+                quizList.add(new Quiz("男性", "だんせい", null, null));
+                quizList.add(new Quiz("女性", "じょせい", null, null));
+                quizList.add(new Quiz("高齢", "こうれい", null, null));
+                quizList.add(new Quiz("年上", "としうえ", null, null));
+                quizList.add(new Quiz("目上", "めうえ", null, null));
+                quizList.add(new Quiz("先輩", "せんぱい", null, null));
+                quizList.add(new Quiz("後輩", "こうはい", null, null));
+                quizList.add(new Quiz("上司", "じょうし", null, null));
+                quizList.add(new Quiz("相手", "あいて", null, null));
+                quizList.add(new Quiz("知り合い", "しりあい", null, null));
 
-
+                MonsterHunterController.quizList = quizList;
+                MonsterHunterController.parentContainer = contentPane;
 
 
                 //EXAMPLE
@@ -121,7 +137,7 @@ public class VocabularyAppController {
     }
 
     private void showFlashcard(TreeItem<String> newVal) {
-        setVocabularyList(newVal, "Flashcard");
+        setVocabularyList(newVal);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/FlashcardFunctionView.fxml"));
@@ -138,7 +154,7 @@ public class VocabularyAppController {
     }
 
     private void showQuiz (TreeItem<String> newVal) {
-        setVocabularyList(newVal, "Quiz");
+        setQuizList(newVal);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/easyjapanese/QuizFunctionView.fxml"));
@@ -153,7 +169,7 @@ public class VocabularyAppController {
         }
     }
 
-    private void setVocabularyList(TreeItem<String> newVal, String functionality) {
+    private void setQuizList(TreeItem<String> newVal) {
         TreeItem<String> unit = newVal.getParent();
         TreeItem<String> bookName = unit.getParent();
 
@@ -166,19 +182,46 @@ public class VocabularyAppController {
             }
         }
 
-        if (functionality.equals("Flashcard")) {
-            FlashcardController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
-        } else if (functionality.equals("Quiz")) {
-            FillInTheBlankController.vocabularyList = getVocabularyList(bookISBN, Integer.parseInt(parts[1]));
+        List<Quiz> quizList = new ArrayList<Quiz>();
+
+        ResultSet resultSet = DatabaseConnector.getInstance().executeQuery(
+                "SELECT * FROM " + bookISBN + " WHERE lessonID = " +  (Integer.parseInt(parts[1]))  + ";");
+
+        try {
+            while (resultSet.next()) {
+                Quiz quiz = new Quiz();
+
+                quiz.setQuestion(resultSet.getString("meaning").replace("/", " or "));
+                quiz.setOtherInformation(resultSet.getString("meaning").replace("/", " or "));
+                quiz.setAnswerFirstChoice(resultSet.getString("japaneseWord"));
+                quiz.setAnswerSecondChoice(resultSet.getString("hiragana"));
+
+                quizList.add(quiz);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
+        QuizController.quizList = quizList;
     }
 
-    private List<Vocabulary> getVocabularyList(String bookISBN, int unit) {
+    private void setVocabularyList(TreeItem<String> newVal) {
+        TreeItem<String> unit = newVal.getParent();
+        TreeItem<String> bookName = unit.getParent();
+
+        String[] parts = unit.getValue().split(" ");
+
+        String bookISBN = null;
+        for (Map.Entry<String, String> entry : bookData.entrySet()) {
+            if (bookName.getValue().equals(entry.getValue())) {
+                bookISBN = entry.getKey();
+            }
+        }
+
         List<Vocabulary> vocabularyList = new ArrayList<Vocabulary>();
 
         ResultSet resultSet = DatabaseConnector.getInstance().executeQuery(
-                "SELECT * FROM " + bookISBN + " WHERE lessonID = " + String.valueOf(unit) + ";");
+                "SELECT * FROM " + bookISBN + " WHERE lessonID = " + (Integer.parseInt(parts[1])) + ";");
 
         try {
             while (resultSet.next()) {
@@ -189,14 +232,14 @@ public class VocabularyAppController {
                 vocabulary.setHiragana(resultSet.getString("hiragana"));
                 //Lingva translator will fail if there is "/".
                 vocabulary.setEnglishMeaning(resultSet.getString("meaning").replace("/", " or "));
-                vocabulary.setOtherLanguageMeaning(resultSet.getString("meaning").replace("/", " or "));
+                vocabulary.setOtherInformation(resultSet.getString("meaning").replace("/", " or "));
                 vocabularyList.add(vocabulary);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return vocabularyList;
+        FlashcardController.vocabularyList = vocabularyList;
     }
 
     private Map<String, Map<Integer, List<Integer>>> createMenuData() {

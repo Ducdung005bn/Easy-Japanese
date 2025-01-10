@@ -5,7 +5,7 @@ public class Vocabulary {
     private String vocabulary;
     private String hiragana;
     private String englishMeaning;
-    private String otherLanguageMeaning;
+    private String otherInformation;
     private int lessonID;
 
     public Vocabulary() {
@@ -16,12 +16,13 @@ public class Vocabulary {
                       String vocabulary,
                       String hiragana,
                       String englishMeaning,
+                      String otherInformation,
                       int lessonID) {
         this.vocabularyID = vocabularyID;
         this.vocabulary = vocabulary;
         this.hiragana = hiragana;
         this.englishMeaning = englishMeaning;
-        this.otherLanguageMeaning = englishMeaning; //Haven't translated yet
+        this.otherInformation = otherInformation;
         this.lessonID = lessonID;
     }
 
@@ -65,19 +66,11 @@ public class Vocabulary {
         this.lessonID = lessonID;
     }
 
-    public String getOtherLanguageMeaning() {
-        return otherLanguageMeaning;
+    public String getOtherInformation() {
+        return otherInformation;
     }
 
-    public void setOtherLanguageMeaning(String otherLanguageMeaning) {
-        this.otherLanguageMeaning = otherLanguageMeaning;
-    }
-
-    public String getMeaning(boolean isEnglishMeaning) {
-        if (isEnglishMeaning) {
-            return englishMeaning;
-        } else {
-            return otherLanguageMeaning;
-        }
+    public void setOtherInformation(String otherInformation) {
+        this.otherInformation = otherInformation;
     }
 }

@@ -34,12 +34,12 @@
             <Image url="@../../../pictureContainer/shuffle-flat.png" />
          </image>
       </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reverse order" GridPane.columnIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Shuffle order" GridPane.columnIndex="2">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <CheckBox fx:id="reverseOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="3" />
+      <CheckBox fx:id="shuffleOrderCheckBox" mnemonicParsing="false" GridPane.columnIndex="3" />
       <ImageView fitHeight="34.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <image>
             <Image url="@../../../pictureContainer/sound-on-flat.png" />
