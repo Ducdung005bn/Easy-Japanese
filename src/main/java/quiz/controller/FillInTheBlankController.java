@@ -1,4 +1,4 @@
-package quiz;
+package quiz.controller;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -15,20 +15,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import quiz.function.controller.FillInTheBlankFunctionController;
 import utils.InterfaceHandler;
 import utils.PixabayImageSearcher;
 import utils.SoundPlayer;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class FillInTheBlankController extends QuizController {
     //QuizController stores shared functions, while FillInTheBlankController stores specific functions
     public static FillInTheBlankFunctionController fillInTheBlankFunctionController;
 
-    private int currentQuizIndex;
     private boolean isShowingFeedback = false; //To handle no pressing submit button
 
     Timeline timeline;
@@ -75,38 +74,40 @@ public class FillInTheBlankController extends QuizController {
 
             showQuestion();
 
-            updateProgess();
+            updateProgessBar();
             updateTimeBar();
         }
 
-        submitButton.setOnAction(event -> submitButtonHandler());
+        submitButton.setOnAction(event -> handleSubmitButton());
 
         if (quizFunctionController.getSoundName() != null) {
             volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                getSoundPlayer().setVolume(newValue.doubleValue() / 100);
+                soundPlayer.setVolume(newValue.doubleValue() / 100);
             });
         }
     }
 
-    private void setQuizFunction() {
+    @Override
+    void setQuizFunction() {
         if (quizFunctionController.getShuffleOrder()) {
             Collections.shuffle(quizList);
         }
 
         if (quizFunctionController.getSoundFilePath() != null) {
-            setSoundPlayer(new SoundPlayer(
-                    quizFunctionController.getSoundFilePath(), true, false));
-            getSoundPlayer().playSound();
+            soundPlayer = new SoundPlayer(
+                    quizFunctionController.getSoundFilePath(), true, false);
+            soundPlayer.playSound();
 
             if (quizFunctionController.getSoundName() != null) {
-                volumeSlider.setValue(getSoundPlayer().getVolume() * 100);
+                volumeSlider.setValue(soundPlayer.getVolume() * 100);
             }
 
-            InterfaceHandler.soundPlayerList.add(getSoundPlayer());
+            InterfaceHandler.soundPlayerList.add(soundPlayer);
         }
     }
 
-    private void submitButtonHandler() {
+    @Override
+    void handleSubmitButton() {
         if (isShowingFeedback)
             return;
 
@@ -129,6 +130,11 @@ public class FillInTheBlankController extends QuizController {
         } else {
             showFeedback("Incorrect. Correct answer: " + correctAnswer, false);
         }
+    }
+
+    @Override
+    void handleSpaceKey() {
+        handleSubmitButton();
     }
 
     private void showFeedback(String feedback, boolean isCorrect) {
@@ -167,7 +173,7 @@ public class FillInTheBlankController extends QuizController {
 
             showQuestion();
 
-            updateProgess();
+            updateProgessBar();
             updateTimeBar();
         }
         else {
@@ -203,9 +209,9 @@ public class FillInTheBlankController extends QuizController {
         String secondImageUrl = null;
 
         try {
-            firstImageUrl = imageUrlList.get(new Random().nextInt(imageUrlList.size()));
+            firstImageUrl = imageUrlList.get(random.nextInt(imageUrlList.size()));
             do {
-                secondImageUrl = imageUrlList.get(new Random().nextInt(imageUrlList.size()));
+                secondImageUrl = imageUrlList.get(random.nextInt(imageUrlList.size()));
             } while (secondImageUrl.equals(firstImageUrl));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -270,7 +276,7 @@ public class FillInTheBlankController extends QuizController {
         questionContainer.getChildren().add(questionText);
     }
 
-    private void updateProgess() {
+    private void updateProgessBar() {
         double progress = (double) (currentQuizIndex + 1) / quizList.size();
         progressBar.setProgress(progress);
 
@@ -285,7 +291,7 @@ public class FillInTheBlankController extends QuizController {
                 new KeyFrame(Duration.millis(100.0), event -> {
                     double progress = timeBar.getProgress() - (1.0 / timeLimit) * (100.0 / 1000.0);
                     if (progress <= 0) {
-                        submitButtonHandler();
+                        handleSubmitButton();
                     }
                     timeBar.setProgress(progress);
                 })
@@ -294,5 +300,4 @@ public class FillInTheBlankController extends QuizController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-
 }

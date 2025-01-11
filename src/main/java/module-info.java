@@ -12,8 +12,14 @@ module org.example.easyjapanese {
     exports org.example.easyjapanese;
     exports utils;
     opens utils to javafx.fxml;
-    exports quiz;
-    opens quiz to javafx.fxml;
     exports flashcard;
     opens flashcard to javafx.fxml;
+    exports quiz.monster;
+    opens quiz.monster to javafx.fxml;
+    exports quiz.award;
+    opens quiz.award to javafx.fxml;
+    exports quiz.controller;
+    opens quiz.controller to javafx.fxml;
+    exports quiz.function.controller;
+    opens quiz.function.controller to javafx.fxml;
 }

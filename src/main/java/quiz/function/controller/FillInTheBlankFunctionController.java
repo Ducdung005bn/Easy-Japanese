@@ -1,10 +1,11 @@
-package quiz;
+package quiz.function.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import quiz.controller.FillInTheBlankController;
 
 public class FillInTheBlankFunctionController {
     @FXML

@@ -1,4 +1,4 @@
-package org.example.easyjapanese;
+package quiz.award;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import org.example.easyjapanese.Quiz;
 
 import java.util.Random;
 
@@ -19,9 +20,9 @@ public class Award {
     private final Random random = new Random();
 
     private final String[] typeList = new String[]{
-            "freezeTime", "boostPower", "slowMonster", "explodeBomb"
+            "freezeTime", "boostPower", "explodeBomb"
     };
-    private final int awardSideLength = 50;
+    private final int awardSideLength = 30;
     private String type;
     private final int movementSpeed = 1;
     private int movementType;
@@ -40,7 +41,7 @@ public class Award {
         this.quiz = quiz;
 
         //type = typeList[random.nextInt(typeList.length)];
-        type = typeList[0];
+        type = typeList[2];
         movementType = random.nextInt(4);
 
         awardImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/" + type + ".png"))));
@@ -59,7 +60,7 @@ public class Award {
         awardGroup = new Group(awardImageView, questionLabel);
         battleContainer.getChildren().add(awardGroup);
 
-        xCenter = random.nextInt((int) (battleContainer.getWidth() + 1 - 3 * questionLabel.getWidth()));
+        xCenter = random.nextInt(1000);
         awardGroup.setLayoutX(xCenter);
         awardGroup.setLayoutY(0);
 

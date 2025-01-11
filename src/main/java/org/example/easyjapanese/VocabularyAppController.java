@@ -8,9 +8,9 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
-import quiz.MonsterHunterController;
-import quiz.QuizController;
-import quiz.QuizFunctionController;
+import quiz.controller.MonsterHunterController;
+import quiz.controller.QuizController;
+import quiz.function.controller.QuizFunctionController;
 import utils.DatabaseConnector;
 import utils.InterfaceHandler;
 
@@ -65,8 +65,6 @@ public class VocabularyAppController {
                 quizList.add(new Quiz("知り合い", "しりあい", null, null));
 
                 MonsterHunterController.quizList = quizList;
-                MonsterHunterController.parentContainer = contentPane;
-
 
                 //EXAMPLE
                 try {

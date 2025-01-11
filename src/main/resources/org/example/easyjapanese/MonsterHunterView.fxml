@@ -13,27 +13,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1063.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quiz.MonsterHunterController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1063.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quiz.controller.MonsterHunterController">
    <children>
-      <ImageView fx:id="backgroundImageView" fitHeight="725.0" fitWidth="1063.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backgroundImageView" fitHeight="726.0" fitWidth="1063.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../pictureContainer/background/1.png" />
+            <Image url="@../../../pictureContainer/background.png" />
          </image></ImageView>
       <VBox prefHeight="725.0" prefWidth="1063.0">
          <children>
             <HBox prefHeight="37.0" prefWidth="1056.0" />
             <Pane fx:id="battleContainer" prefHeight="627.0" prefWidth="1061.0">
                <children>
-                  <ImageView fx:id="diamond" fitHeight="48.0" fitWidth="60.0" layoutX="541.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="diamond" fitHeight="48.0" fitWidth="60.0" layoutX="508.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../pictureContainer/diamond.png" />
                      </image>
                   </ImageView>
-                  <ProgressBar fx:id="powerBar" layoutX="500.0" layoutY="125.0" prefHeight="10.0" prefWidth="131.0" progress="0.0" />
+                  <ProgressBar fx:id="powerBar" layoutX="411.0" layoutY="104.0" prefHeight="23.0" prefWidth="243.0" progress="0.0" />
                </children></Pane>
             <AnchorPane onKeyPressed="#handleSpaceKey" prefHeight="38.0" prefWidth="1069.0">
                <children>
-                  <TextField fx:id="answerTextField" alignment="CENTER" layoutX="329.0" prefHeight="48.0" prefWidth="303.0">
+                  <TextField fx:id="answerTextField" alignment="CENTER" layoutX="343.0" prefHeight="48.0" prefWidth="303.0">
                      <font>
                         <Font name="Bodoni MT Black" size="16.0" />
                      </font>
@@ -41,7 +41,7 @@
                         <InnerShadow height="57.01" radius="41.3875" width="110.54" />
                      </effect>
                   </TextField>
-                  <Button fx:id="shootButton" layoutX="632.0" mnemonicParsing="false" onMouseClicked="#handleShootClick" prefHeight="48.0" prefWidth="85.0" text="SHOOT">
+                  <Button fx:id="shootButton" layoutX="634.0" mnemonicParsing="false" onMouseClicked="#handleSubmitButton" prefHeight="48.0" prefWidth="85.0" text="SHOOT">
                      <font>
                         <Font name="Bodoni MT Black" size="16.0" />
                      </font>

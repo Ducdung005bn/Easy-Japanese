@@ -1,4 +1,4 @@
-package quiz;
+package quiz.function.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import quiz.controller.QuizController;
 import utils.LanguageHandler;
 import utils.SoundPlayer;
 
