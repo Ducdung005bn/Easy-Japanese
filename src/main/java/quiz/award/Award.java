@@ -15,16 +15,14 @@ import org.example.easyjapanese.Quiz;
 
 import java.util.Random;
 
-public class Award {
+public abstract class Award {
     public static Pane battleContainer;
-    private final Random random = new Random();
+    final Random random = new Random();
+    final int awardActivationTime = 8;
 
-    private final String[] typeList = new String[]{
-            "freezeTime", "boostPower", "explodeBomb"
-    };
     private final int awardSideLength = 30;
-    private String type;
     private final int movementSpeed = 1;
+    private final String type;
     private int movementType;
     private int xCenter;
     private Timeline awardTimeline;
@@ -37,11 +35,10 @@ public class Award {
 
     private boolean isExisting = true;
 
-    public Award(Quiz quiz) {
+    public Award(Quiz quiz, String type) {
         this.quiz = quiz;
+        this.type = type;
 
-        //type = typeList[random.nextInt(typeList.length)];
-        type = typeList[2];
         movementType = random.nextInt(4);
 
         awardImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/" + type + ".png"))));
@@ -97,6 +94,13 @@ public class Award {
 
     public Group getAwardGroup() {
         return awardGroup;
+    }
+
+    public void activateAward() {
+        glowTimeline.stop();
+        awardTimeline.stop();
+
+        battleContainer.getChildren().remove(awardGroup);
     }
 
     private void createGlowTimeline() {

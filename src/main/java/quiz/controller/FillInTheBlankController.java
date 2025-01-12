@@ -67,7 +67,7 @@ public class FillInTheBlankController extends QuizController {
         setQuizFunction();
 
         if (quizList != null && !quizList.isEmpty()) {
-            currentQuizIndex = 0;
+            currentQuizIndex.setValue(0);
 
             feedbackText.setText("");
             feedbackContainer.setStyle("-fx-background-color: #e6e6e6;");
@@ -116,8 +116,8 @@ public class FillInTheBlankController extends QuizController {
         String answer = answerTextField.getText();
         String correctAnswer = null;
 
-        String firstAnswer = quizList.get(currentQuizIndex).getAnswerFirstChoice();
-        String secondAnswer = quizList.get(currentQuizIndex).getAnswerSecondChoice();
+        String firstAnswer = quizList.get(currentQuizIndex.getValue()).getAnswerFirstChoice();
+        String secondAnswer = quizList.get(currentQuizIndex.getValue()).getAnswerSecondChoice();
 
         if (!firstAnswer.equals(secondAnswer) && secondAnswer != null) {
             correctAnswer = firstAnswer + " / " + secondAnswer;
@@ -125,16 +125,11 @@ public class FillInTheBlankController extends QuizController {
             correctAnswer = firstAnswer;
         }
 
-        if (quizList.get(currentQuizIndex).isCorrectAnswer(answer)) {
+        if (quizList.get(currentQuizIndex.getValue()).isCorrectAnswer(answer)) {
             showFeedback("Correct", true);
         } else {
             showFeedback("Incorrect. Correct answer: " + correctAnswer, false);
         }
-    }
-
-    @Override
-    void handleSpaceKey() {
-        handleSubmitButton();
     }
 
     private void showFeedback(String feedback, boolean isCorrect) {
@@ -167,8 +162,8 @@ public class FillInTheBlankController extends QuizController {
     }
 
     private void moveToNextQuiz() {
-        if (currentQuizIndex < quizList.size() - 1) {
-            currentQuizIndex++;
+        if (currentQuizIndex.getValue() < quizList.size() - 1) {
+            currentQuizIndex.setValue(currentQuizIndex.getValue() + 1);
             answerTextField.setText("");
 
             showQuestion();
@@ -195,7 +190,7 @@ public class FillInTheBlankController extends QuizController {
         List<String> imageUrlList = null;
 
         FutureTask<List<String>> futureTask = new FutureTask<>(() ->
-                PixabayImageSearcher.getImage(quizList.get(currentQuizIndex).getQuestion()));
+                PixabayImageSearcher.getImage(quizList.get(currentQuizIndex.getValue()).getQuestion()));
 
         new Thread(futureTask).start();
 
@@ -245,7 +240,7 @@ public class FillInTheBlankController extends QuizController {
     private void showMeaning() {
         Text questionText = new Text();
 
-        questionText.setText(quizList.get(currentQuizIndex).getOtherInformation());
+        questionText.setText(quizList.get(currentQuizIndex.getValue()).getOtherInformation());
         questionText.setFill(Color.RED);
         questionText.setFont(new Font(48.0));
 
@@ -277,10 +272,10 @@ public class FillInTheBlankController extends QuizController {
     }
 
     private void updateProgessBar() {
-        double progress = (double) (currentQuizIndex + 1) / quizList.size();
+        double progress = (double) (currentQuizIndex.getValue() + 1) / quizList.size();
         progressBar.setProgress(progress);
 
-        progressText.setText("   " + String.valueOf(currentQuizIndex + 1) + "/" + quizList.size());
+        progressText.setText("   " + String.valueOf(currentQuizIndex.getValue() + 1) + "/" + quizList.size());
     }
 
     private void updateTimeBar() {

@@ -15,28 +15,16 @@ public class ShieldedMonster extends BasicMonster {
     private Label shieldQuestionLabel;
     private Group shieldGroup;
 
-    public ShieldedMonster(Quiz monsterQuiz, Quiz shieldQuiz) {
-        super(monsterQuiz);
-        this.shieldQuiz = shieldQuiz;
-        hasShield = true;
+    public ShieldedMonster(Quiz monsterQuiz, Quiz shieldQuiz, boolean isYellow, boolean isFromLeft, double startingX, double startingY) {
+        super(monsterQuiz, isYellow, isFromLeft, startingX, startingY);
 
-        shieldImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/shield.png"))));
-        shieldImageView.setFitWidth(monsterFrameWidth);
-        shieldImageView.setFitHeight(monsterFrameHeight);
+        initializeShield(shieldQuiz);
+    }
 
-        shieldQuestionLabel = new Label(shieldQuiz.getQuestion());
-        shieldQuestionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5); -fx-padding: 4px;");
-        shieldQuestionLabel.setMinWidth(monsterFrameWidth);
-        shieldQuestionLabel.setAlignment(Pos.CENTER);
+    public ShieldedMonster(Quiz monsterQuiz, Quiz shieldQuiz, boolean isYellow, boolean isFromLeft) {
+        super(monsterQuiz, isYellow, isFromLeft);
 
-        shieldQuestionLabel.setLayoutX(0);
-        shieldQuestionLabel.setLayoutY(-shieldQuestionLabel.getHeight() + 25);
-
-        shieldGroup = new Group(shieldImageView, shieldQuestionLabel);
-        battleContainer.getChildren().add(shieldGroup);
-
-        shieldGroup.setLayoutX(monsterGroup.getLayoutX());
-        shieldGroup.setLayoutY(monsterGroup.getLayoutY());
+        initializeShield(shieldQuiz);
     }
 
     public Quiz getShieldQuiz() {
@@ -65,5 +53,28 @@ public class ShieldedMonster extends BasicMonster {
         } else {
             super.beShot();
         }
+    }
+
+    private void initializeShield(Quiz shieldQuiz) {
+        this.shieldQuiz = shieldQuiz;
+        this.hasShield = true;
+
+        shieldImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/shield.png"))));
+        shieldImageView.setFitWidth(monsterFrameWidth);
+        shieldImageView.setFitHeight(monsterFrameHeight);
+
+        shieldQuestionLabel = new Label(shieldQuiz.getQuestion());
+        shieldQuestionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5); -fx-padding: 4px;");
+        shieldQuestionLabel.setMinWidth(monsterFrameWidth);
+        shieldQuestionLabel.setAlignment(Pos.CENTER);
+
+        shieldQuestionLabel.setLayoutX(0);
+        shieldQuestionLabel.setLayoutY(-shieldQuestionLabel.getHeight() + 25);
+
+        shieldGroup = new Group(shieldImageView, shieldQuestionLabel);
+        battleContainer.getChildren().add(shieldGroup);
+
+        shieldGroup.setLayoutX(monsterGroup.getLayoutX());
+        shieldGroup.setLayoutY(monsterGroup.getLayoutY());
     }
 }

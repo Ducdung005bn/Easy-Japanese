@@ -13,6 +13,8 @@ import javafx.util.Duration;
 import org.example.easyjapanese.Quiz;
 import quiz.controller.MonsterHunterController;
 
+import java.util.Map;
+
 public class BasicMonster extends Monster {
     private static final double fireFrameWidth = (double) 949.0 / 9;
     private static final double fireFrameHeight = 280.0 / 2;
@@ -24,8 +26,8 @@ public class BasicMonster extends Monster {
     private static final int bloodTotalFrames = 16;
     private int bloodCurrentFrame = 0;
 
-    private boolean isYellow; // if not, it's black
-    private boolean isFromLeft;
+    private final boolean isYellow; // if not, it's black
+    private final boolean isFromLeft;
     private int movementSpeed;
     private static int timeBetweenTwoAttacks = 3;
 
@@ -37,44 +39,29 @@ public class BasicMonster extends Monster {
     private ImageView bloodImageView;
     private Timeline bloodAnimation;
 
-    public BasicMonster(Quiz quiz) {
-        super((double) 820 / 6, (double) 250 / 2, 6, 12);
+    public BasicMonster(Quiz quiz, boolean isYellow, boolean isFromLeft, double startingX, double startingY) {
+        super((double) 820 / 6,
+                (double) 250 / 2,
+                6,
+                12,
+                isYellow ? "yellow-monster.png" : "black-monster.png",
+                quiz);
 
-        isYellow = random.nextBoolean();
-        isFromLeft = random.nextBoolean();
+        this.quiz = quiz;
+        this.isYellow = isYellow;
+        this.isFromLeft = isFromLeft;
         movementSpeed = 2;
         monsterCurrentFrame = 0;
 
-        // Initialize ImageView
-        if (isYellow) {
-            monsterImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/yellow-monster.png"))));
-        } else {
-            monsterImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/black-monster.png"))));
-        }
-
-        monsterImageView.setFitWidth(monsterFrameWidth);
-        monsterImageView.setFitHeight(monsterFrameHeight);
-
-        // Initialize Label
-        questionLabel = new Label(quiz.getQuestion());
-        questionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5); -fx-padding: 4px;");
-        questionLabel.setMinWidth(monsterFrameWidth);
-        questionLabel.setAlignment(Pos.CENTER);
-
-        questionLabel.setLayoutX(0);
-        questionLabel.setLayoutY(-questionLabel.getHeight() + 25);
-
-        // Create Group
-        monsterGroup = new Group(monsterImageView, questionLabel);
-        battleContainer.getChildren().add(monsterGroup);
-
         // Starting position; 1061 and 627 is the width and height of battleContainer
-        monsterGroup.setLayoutX(isFromLeft ? -monsterFrameWidth : 1061);
-        monsterGroup.setLayoutY(random.nextInt(628));
-
-        this.quiz = quiz;
+        monsterGroup.setLayoutX(startingX);
+        monsterGroup.setLayoutY(startingY);
 
         updateMonsterTimeline();
+    }
+
+    public BasicMonster(Quiz quiz, boolean isYellow, boolean isFromLeft) {
+        this(quiz, isYellow, isFromLeft, isFromLeft ? - (double) 820 / 6 : 1061, random.nextInt(628));
     }
 
     public Quiz getQuiz() {
@@ -112,6 +99,8 @@ public class BasicMonster extends Monster {
 
     @Override
     public void beShot() {
+        stopMonsterTimeline();
+
         movementSpeed = 0;
 
         Image bloodImage = new Image(String.valueOf(getClass().getResource("/pictureContainer/blood-effect.png")));
@@ -156,6 +145,21 @@ public class BasicMonster extends Monster {
 
         bloodAnimation.setCycleCount(bloodTotalFrames);
         bloodAnimation.play();
+    }
+
+    @Override
+    public void beFrozen(Map<Monster, ImageView> freezeImageViews, int awardActivationTime) {
+        super.beFrozen(freezeImageViews, awardActivationTime);
+
+        ImageView freezeImageView = freezeImageViews.get(this);
+
+        if (!isFromLeft) {
+            freezeImageView.setScaleX(-1);
+            freezeImageView.setLayoutX(getMonsterGroup().getLayoutX() - (double) 601 / 3 + 50);
+        } else {
+            freezeImageView.setLayoutX(getMonsterGroup().getLayoutX() + (double) 820 / 6 - 50);
+        }
+        freezeImageView.setLayoutY(getMonsterGroup().getLayoutY() - 20);
     }
 
     @Override

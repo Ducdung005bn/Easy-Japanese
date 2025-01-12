@@ -7,6 +7,7 @@ module org.example.easyjapanese {
     requires javafx.media;
     requires org.json;
     requires org.jsoup;
+    requires org.apache.commons.lang3;
 
     opens org.example.easyjapanese to javafx.fxml;
     exports org.example.easyjapanese;

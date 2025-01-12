@@ -2,6 +2,7 @@ package quiz.controller;
 
 import javafx.fxml.FXML;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.example.easyjapanese.Quiz;
 import quiz.function.controller.QuizFunctionController;
 import utils.SoundPlayer;
@@ -15,7 +16,7 @@ public abstract class QuizController {
 
     final Random random = new Random();
     SoundPlayer soundPlayer;
-    int currentQuizIndex;
+    MutableInt currentQuizIndex = new MutableInt();
 
     abstract void setQuizFunction();
 
@@ -23,5 +24,7 @@ public abstract class QuizController {
     abstract void handleSubmitButton();
 
     @FXML
-    abstract void handleSpaceKey();
+    void handleSpaceKey() {
+        handleSubmitButton();
+    }
 }
