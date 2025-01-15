@@ -40,9 +40,9 @@ public abstract class Award {
         this.type = type;
 
         movementType = random.nextInt(4);
+        xCenter = random.nextInt(1000);
 
         awardImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/" + type + ".png"))));
-
         awardImageView.setFitWidth(awardSideLength);
         awardImageView.setFitHeight(awardSideLength);
 
@@ -55,11 +55,9 @@ public abstract class Award {
 
         // Create Group
         awardGroup = new Group(awardImageView, questionLabel);
-        battleContainer.getChildren().add(awardGroup);
-
-        xCenter = random.nextInt(1000);
         awardGroup.setLayoutX(xCenter);
         awardGroup.setLayoutY(0);
+        battleContainer.getChildren().add(awardGroup);
 
         //Create glow effect
         createGlowTimeline();

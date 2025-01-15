@@ -16,10 +16,7 @@ import quiz.award.Award;
 import quiz.award.BoostPowerAward;
 import quiz.award.ExplodeBombAward;
 import quiz.award.FreezeTimeAward;
-import quiz.monster.BasicMonster;
-import quiz.monster.BlackHole;
-import quiz.monster.Monster;
-import quiz.monster.ShieldedMonster;
+import quiz.monster.*;
 import utils.InterfaceHandler;
 
 import java.util.*;
@@ -78,44 +75,31 @@ public class MonsterHunterController extends QuizController {
     }
 
     private void updateQuizTimeline() {
+        Map<Integer, Function<Integer, Monster>> monsterFactory = Map.of(
+                0, index -> new BasicMonster(quizList.get(index), random.nextBoolean(), random.nextBoolean()),
+                1, index -> new ShieldedMonster(quizList.get(index), quizList.get(index + 1), random.nextBoolean(), random.nextBoolean()),
+                2, index -> new BlackHole(quizList.get(index), monsterList, quizList, currentQuizIndex),
+                3, index -> new CharmedMonster(quizList.get(index), monsterList)
+        );
+
         quizTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(timeBetweenTwoQuizzes), event -> {
                     if (currentQuizIndex.getValue() < quizList.size()) {
                         int monsterType;
 
-                        //Handle exception
                         do {
-                            //monsterType = random.nextInt(2);
-                            monsterType = 2;
-                        } while (!((monsterType == 0)
-                                || (monsterType == 1 && currentQuizIndex.getValue() < quizList.size() - 1)
-                                || (monsterType == 2)));
+                            //monsterType = random.nextInt(4);
+                            monsterType = 3;
+                        } while (monsterType == 1 && currentQuizIndex.getValue() + 1 >= quizList.size());
 
-                        switch (monsterType) {
-                            case 0: {
-                                BasicMonster basicMonster = new BasicMonster(quizList.get(currentQuizIndex.getValue()), random.nextBoolean(), random.nextBoolean());
-                                monsterList.add(basicMonster);
-                                InterfaceHandler.timelineList.addAll(basicMonster.getMonsterTimeline());
+                        Monster monster = monsterFactory.get(monsterType).apply(currentQuizIndex.getValue());
+                        monsterList.add(monster);
+                        InterfaceHandler.objectList.addAll(monster.getMonsterTimeline());
 
-                                currentQuizIndex.setValue(currentQuizIndex.getValue() + 1);
-                                break;
-                            }
-                            case 1: {
-                                ShieldedMonster shieldedMonster = new ShieldedMonster(quizList.get(currentQuizIndex.getValue()), quizList.get(currentQuizIndex.getValue() + 1), random.nextBoolean(), random.nextBoolean());
-                                monsterList.add(shieldedMonster);
-                                InterfaceHandler.timelineList.addAll(shieldedMonster.getMonsterTimeline());
-
-                                currentQuizIndex.setValue(currentQuizIndex.getValue() + 2);
-                                break;
-                            }
-                            case 2: {
-                                BlackHole blackHole = new BlackHole(quizList.get(currentQuizIndex.getValue()), monsterList, awardList, quizList, currentQuizIndex);
-                                monsterList.add(blackHole);
-                                InterfaceHandler.timelineList.addAll(blackHole.getMonsterTimeline());
-
-                                currentQuizIndex.setValue(currentQuizIndex.getValue() + 1);
-                                break;
-                            }
+                        if (monsterType == 1) {
+                            currentQuizIndex.setValue(currentQuizIndex.getValue() + 2);
+                        } else {
+                            currentQuizIndex.setValue(currentQuizIndex.getValue() + 1);
                         }
                     } else {
                         quizTimeline.stop();
@@ -126,8 +110,9 @@ public class MonsterHunterController extends QuizController {
         quizTimeline.setCycleCount(Timeline.INDEFINITE);
         quizTimeline.play();
 
-        InterfaceHandler.timelineList.add(quizTimeline);
+        InterfaceHandler.objectList.add(quizTimeline);
     }
+
 
     private void updateAwardTimeline() {
         Map<Integer, Function<Quiz, Award>> awardFactory = Map.of(
@@ -139,12 +124,13 @@ public class MonsterHunterController extends QuizController {
         awardTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(timeBetweenTwoAwards), event -> {
                     if (currentQuizIndex.getValue() < quizList.size()) {
-                        int awardType = random.nextInt(3);
+                        //int awardType = random.nextInt(3);
+                        int awardType = 0;
 
                         Award award = awardFactory.get(awardType).apply(quizList.get(currentQuizIndex.getValue()));
                         awardList.add(award);
 
-                        Collections.addAll(InterfaceHandler.timelineList,
+                        Collections.addAll(InterfaceHandler.objectList,
                                 award.getGlowTimeline(), award.getAwardTimeline());
 
                         currentQuizIndex.setValue(currentQuizIndex.getValue() + 1);
@@ -157,7 +143,7 @@ public class MonsterHunterController extends QuizController {
         awardTimeline.setCycleCount(Timeline.INDEFINITE);
         awardTimeline.play();
 
-        InterfaceHandler.timelineList.add(awardTimeline);
+        InterfaceHandler.objectList.add(awardTimeline);
     }
 
     private void updatePowerBarTimeline() {
@@ -174,7 +160,7 @@ public class MonsterHunterController extends QuizController {
         powerBarTimeline.setCycleCount(Timeline.INDEFINITE);
         powerBarTimeline.play();
 
-        InterfaceHandler.timelineList.add(powerBarTimeline);
+        InterfaceHandler.objectList.add(powerBarTimeline);
     }
 
     @Override
@@ -187,33 +173,13 @@ public class MonsterHunterController extends QuizController {
         String userAnswer = answerTextField.getText();
 
         for (int i = monsterList.size() - 1; i >= 0; i--) {
-            if (monsterList.get(i) instanceof ShieldedMonster) {
-                ShieldedMonster shieldedMonster = (ShieldedMonster) monsterList.get(i);
-
-                if (shieldedMonster.getHasShield() && shieldedMonster.getShieldQuiz().isCorrectAnswer(userAnswer)) {
-                    shieldedMonster.beShot(); //shield's got broken
-                } else if (!shieldedMonster.getHasShield() && shieldedMonster.getQuiz().isCorrectAnswer(userAnswer)) {
-                    shieldedMonster.beShot();
-                    monsterList.remove(i);
-                    power = Math.min(100, power + 15);
-                }
-            } else if (monsterList.get(i) instanceof BasicMonster) {
-                BasicMonster basicMonster = (BasicMonster) monsterList.get(i);
-
-                if (basicMonster.getQuiz().isCorrectAnswer(userAnswer)) {
-                    basicMonster.beShot();
-                    monsterList.remove(i);
-                    power = Math.min(100, power + 10);
-                }
-            }
+            monsterList.get(i).checkAnswer(monsterList, i, userAnswer);
         }
 
         for (int i = awardList.size() - 1; i >= 0; i--) {
-             Award award = awardList.get(i);
-
+            Award award = awardList.get(i);
             if (award.getIsExisting() && award.getQuiz().isCorrectAnswer(userAnswer)) {
                 award.activateAward();
-
                 awardList.remove(i);
             }
         }

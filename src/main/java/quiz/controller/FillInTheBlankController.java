@@ -102,7 +102,7 @@ public class FillInTheBlankController extends QuizController {
                 volumeSlider.setValue(soundPlayer.getVolume() * 100);
             }
 
-            InterfaceHandler.soundPlayerList.add(soundPlayer);
+            InterfaceHandler.objectList.add(soundPlayer);
         }
     }
 
@@ -294,5 +294,7 @@ public class FillInTheBlankController extends QuizController {
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        InterfaceHandler.objectList.add(timeline);
     }
 }

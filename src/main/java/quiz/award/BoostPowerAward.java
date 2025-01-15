@@ -12,6 +12,6 @@ public class BoostPowerAward extends Award {
     public void activateAward() {
         super.activateAward();
 
-        MonsterHunterController.power = Math.min(100, MonsterHunterController.power + 20);
+        MonsterHunterController.power = Math.min(100, MonsterHunterController.power + 15);
     }
 }

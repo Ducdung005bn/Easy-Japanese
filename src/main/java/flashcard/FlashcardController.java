@@ -1,5 +1,6 @@
 package flashcard;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -8,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.easyjapanese.Vocabulary;
 import utils.EnglishTextToSpeech;
 import utils.InterfaceHandler;
@@ -90,36 +92,8 @@ public class FlashcardController {
                 volumeSlider.setValue(soundPlayer.getVolume() * 100);
             }
 
-            InterfaceHandler.soundPlayerList.add(soundPlayer);
+            InterfaceHandler.objectList.add(soundPlayer);
         }
-    }
-
-    private String getVocabularyText() {
-        String vocabularyText = "";
-
-        if (flashcardFunctionController.getShowKanji()) {
-            vocabularyText += vocabularyList.get(currentCardIndex).getVocabulary();
-
-            if (flashcardFunctionController.getShowHiragana()) {
-                vocabularyText += " (" + vocabularyList.get(currentCardIndex).getHiragana() + ")";
-            }
-        } else {
-            vocabularyText += vocabularyList.get(currentCardIndex).getHiragana();
-        }
-
-        if (vocabularyList.get(currentCardIndex).getVocabulary().equals(
-                vocabularyList.get(currentCardIndex).getHiragana())) {
-            vocabularyText = vocabularyList.get(currentCardIndex).getHiragana();
-        }
-
-        return vocabularyText;
-    }
-
-    private void updateProgess() {
-        double progress = (double) (currentCardIndex + 1) / vocabularyList.size();
-        progressBar.setProgress(progress);
-
-        progressText.setText("   " + String.valueOf(currentCardIndex + 1) + "/" + vocabularyList.size());
     }
 
     private void setEventHandlers() {
@@ -151,11 +125,7 @@ public class FlashcardController {
 
             updateProgess();
 
-            InterfaceHandler.effectTransition(flashcardContainer,
-                    flashcardText,
-                    getVocabularyText(),
-                    50,
-                    48);
+            effectTransition(getVocabularyText(), 50, 48);
         }
     }
 
@@ -165,16 +135,58 @@ public class FlashcardController {
 
             updateProgess();
 
-            InterfaceHandler.effectTransition(flashcardContainer,
-                    flashcardText,
-                    getVocabularyText(),
-                    50,
-                    48);
+            effectTransition(getVocabularyText(), 50, 48);
         }
+    }
+
+    private void effectTransition(String newText, int maxLength, int standardFontSize) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), flashcardContainer);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.25);
+
+        fadeOut.setOnFinished(event -> {
+            flashcardText.setText(newText);
+            InterfaceHandler.autoResizeText(flashcardText, maxLength, standardFontSize);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(500), flashcardContainer);
+            fadeIn.setFromValue(0.25);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+
+        fadeOut.play();
     }
 
     @FXML
     private void handleAudioIconClick(MouseEvent mouseEvent) {
         //Always play the sound of the Japanese word
+    }
+
+    private void updateProgess() {
+        double progress = (double) (currentCardIndex + 1) / vocabularyList.size();
+        progressBar.setProgress(progress);
+
+        progressText.setText("   " + String.valueOf(currentCardIndex + 1) + "/" + vocabularyList.size());
+    }
+
+    private String getVocabularyText() {
+        String vocabularyText = "";
+
+        if (flashcardFunctionController.getShowKanji()) {
+            vocabularyText += vocabularyList.get(currentCardIndex).getVocabulary();
+
+            if (flashcardFunctionController.getShowHiragana()) {
+                vocabularyText += " (" + vocabularyList.get(currentCardIndex).getHiragana() + ")";
+            }
+        } else {
+            vocabularyText += vocabularyList.get(currentCardIndex).getHiragana();
+        }
+
+        if (vocabularyList.get(currentCardIndex).getVocabulary().equals(
+                vocabularyList.get(currentCardIndex).getHiragana())) {
+            vocabularyText = vocabularyList.get(currentCardIndex).getHiragana();
+        }
+
+        return vocabularyText;
     }
 }

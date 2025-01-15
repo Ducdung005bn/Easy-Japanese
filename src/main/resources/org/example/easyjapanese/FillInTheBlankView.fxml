@@ -18,7 +18,7 @@
       <ProgressBar fx:id="progressBar" prefHeight="15.0" prefWidth="1063.0" progress="0.0" />
       <AnchorPane prefHeight="657.0" prefWidth="1063.0">
          <children>
-            <BorderPane fx:id="quizContainer" layoutX="255.0" layoutY="115.0" prefHeight="400.0" prefWidth="553.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2;">
+            <BorderPane fx:id="quizContainer" onKeyPressed="#handleSpaceKey" layoutX="255.0" layoutY="115.0" prefHeight="400.0" prefWidth="553.0" style="-fx-background-color: lightblue; -fx-border-color: black; -fx-border-width: 2;">
                <top>
                   <HBox prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                      <children>

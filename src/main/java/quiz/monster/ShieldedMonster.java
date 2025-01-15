@@ -7,6 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import org.example.easyjapanese.Quiz;
+import quiz.controller.MonsterHunterController;
+
+import java.util.List;
 
 public class ShieldedMonster extends BasicMonster {
     private boolean hasShield;
@@ -15,7 +18,7 @@ public class ShieldedMonster extends BasicMonster {
     private Label shieldQuestionLabel;
     private Group shieldGroup;
 
-    public ShieldedMonster(Quiz monsterQuiz, Quiz shieldQuiz, boolean isYellow, boolean isFromLeft, double startingX, double startingY) {
+    public ShieldedMonster(Quiz monsterQuiz, Quiz shieldQuiz, boolean isYellow, boolean isFromLeft, int startingX, int startingY) {
         super(monsterQuiz, isYellow, isFromLeft, startingX, startingY);
 
         initializeShield(shieldQuiz);
@@ -35,13 +38,28 @@ public class ShieldedMonster extends BasicMonster {
         return hasShield;
     }
 
+    public Group getShieldGroup() {
+        return shieldGroup;
+    }
+
     @Override
-    void updateMonsterMovement() {
-        super.updateMonsterMovement();
+    void updateMonsterMovement(Runnable onStandingStill) {
+        super.updateMonsterMovement(null);
 
         if (hasShield) {
             shieldGroup.setLayoutX(monsterGroup.getLayoutX());
             shieldGroup.setLayoutY(monsterGroup.getLayoutY());
+        }
+    }
+
+    @Override
+    public void checkAnswer(List<Monster> monsterList, int index, String userAnswer) {
+        if (hasShield && shieldQuiz.isCorrectAnswer(userAnswer)) {
+            beShot();
+        } else if (!hasShield && getQuiz().isCorrectAnswer(userAnswer)) {
+            beShot();
+            monsterList.remove(index);
+            MonsterHunterController.power = Math.min(100, MonsterHunterController.power + 10);
         }
     }
 

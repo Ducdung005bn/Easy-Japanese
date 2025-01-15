@@ -1,6 +1,5 @@
 package quiz.monster;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -8,12 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 import org.example.easyjapanese.Quiz;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public abstract class Monster {
@@ -28,6 +25,7 @@ public abstract class Monster {
     final int monsterTotalFrames;
 
     int monsterCurrentFrame;
+    boolean isFromLeft;
 
     ImageView monsterImageView;
     Label questionLabel;
@@ -65,6 +63,10 @@ public abstract class Monster {
         battleContainer.getChildren().add(monsterGroup);
     }
 
+    public boolean getIsFromLeft() {
+        return isFromLeft;
+    }
+
     public Group getMonsterGroup() {
         return monsterGroup;
     }
@@ -93,44 +95,9 @@ public abstract class Monster {
 
     abstract void updateMonsterTimeline();
 
-    void updateMonsterFrame() {
-        int row = monsterCurrentFrame / monsterFrameColumn;
-        int col = monsterCurrentFrame % monsterFrameColumn;
+    abstract void updateMonsterMovement(Runnable onStandingStill);
 
-        monsterImageView.setViewport(
-                new javafx.geometry.Rectangle2D(
-                        col * monsterFrameWidth, row * monsterFrameHeight, monsterFrameWidth, monsterFrameHeight)
-        );
-
-        monsterCurrentFrame = (monsterCurrentFrame + 1) % monsterTotalFrames;
-    }
-
-    abstract void updateMonsterMovement();
+    public abstract void checkAnswer(List<Monster> monsterList, int index, String userAnswer);
 
     public abstract void beShot();
-
-    public void beFrozen(Map<Monster, ImageView> freezeImageViews, int awardActivationTime) {
-        pauseMonsterTimeline();
-
-        ImageView freezeImageView = new ImageView(String.valueOf(getClass().getResource("/pictureContainer/freezing.gif")));
-        freezeImageView.setFitWidth((double) 601 / 3);
-        freezeImageView.setFitHeight((double) 346 / 3);
-
-        battleContainer.getChildren().add(freezeImageView);
-        freezeImageViews.put(this, freezeImageView);
-
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(awardActivationTime), freezeImageView);
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
-    }
-
-    public void unfreeze(Map<Monster, ImageView> freezeImageViews) {
-        playMonsterTimeline();
-
-        ImageView freezeImageView = freezeImageViews.get(this);
-        if (freezeImageView != null) {
-            battleContainer.getChildren().remove(freezeImageView);
-        }
-    }
 }

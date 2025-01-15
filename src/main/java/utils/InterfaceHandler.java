@@ -1,9 +1,8 @@
 package utils;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.layout.Pane;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -11,21 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceHandler {
-    public static List<SoundPlayer> soundPlayerList = new ArrayList<>();
-    public static List<Timeline> timelineList = new ArrayList<>();
+    public static List<Object> objectList = new ArrayList<>();
 
-    public static void removeAllRemainings() {
-        for (SoundPlayer soundPlayer : soundPlayerList) {
-            if (soundPlayer != null) {
+    public static void removeRemainings() {
+        for (Object object : objectList) {
+            if (object instanceof SoundPlayer soundPlayer) {
                 soundPlayer.setStopPlayingSound(true);
-            }
-        }
-
-        for (Timeline timeline : timelineList) {
-            if (timeline != null) {
+            } else if (object instanceof Timeline timeline) {
                 timeline.stop();
             }
         }
+
+        objectList.clear();
+
+        System.gc();
     }
 
     public static void autoResizeText(Text text, int maxLength, int standardFontSize) {
@@ -39,22 +37,19 @@ public class InterfaceHandler {
         text.setFont(new javafx.scene.text.Font(fontSize));
     }
 
-    public static void effectTransition(Pane container, Text text, String newText,
-                                        int maxLength, int standardFontSize) {
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), container);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.25);
+    public static <T> void updateFadeTransition(T UI, int seconds, double statingValue, double endingValue, Runnable onFinished) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(seconds), (Node) UI);
 
-        fadeOut.setOnFinished(event -> {
-            text.setText(newText);
-            InterfaceHandler.autoResizeText(text, maxLength, standardFontSize);
+        fadeTransition.setFromValue(statingValue);
+        fadeTransition.setToValue(endingValue);
 
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(500), container);
-            fadeIn.setFromValue(0.25);
-            fadeIn.setToValue(1.0);
-            fadeIn.play();
+        fadeTransition.setOnFinished(event -> {
+            fadeTransition.stop();
+            if (onFinished != null) {
+                onFinished.run();  //callback if necessary
+            }
         });
 
-        fadeOut.play();
+        fadeTransition.play();
     }
 }

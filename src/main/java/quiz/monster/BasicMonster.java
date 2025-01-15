@@ -4,16 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.example.easyjapanese.Quiz;
 import quiz.controller.MonsterHunterController;
 
-import java.util.Map;
+import java.awt.*;
+import java.util.List;
 
 public class BasicMonster extends Monster {
     private static final double fireFrameWidth = (double) 949.0 / 9;
@@ -26,12 +24,11 @@ public class BasicMonster extends Monster {
     private static final int bloodTotalFrames = 16;
     private int bloodCurrentFrame = 0;
 
-    private final boolean isYellow; // if not, it's black
-    private final boolean isFromLeft;
     private int movementSpeed;
     private static int timeBetweenTwoAttacks = 3;
-
     private Quiz quiz;
+    private Point startingPoint;
+    private Point targetPoint;
 
     private ImageView fireImageView = new ImageView(new Image(String.valueOf(getClass().getResource("/pictureContainer/fire-effect.png"))));
     private Timeline fireAnimation;
@@ -39,7 +36,7 @@ public class BasicMonster extends Monster {
     private ImageView bloodImageView;
     private Timeline bloodAnimation;
 
-    public BasicMonster(Quiz quiz, boolean isYellow, boolean isFromLeft, double startingX, double startingY) {
+    public BasicMonster(Quiz quiz, boolean isYellow, boolean isFromLeft, int startingX, int startingY) {
         super((double) 820 / 6,
                 (double) 250 / 2,
                 6,
@@ -48,10 +45,12 @@ public class BasicMonster extends Monster {
                 quiz);
 
         this.quiz = quiz;
-        this.isYellow = isYellow;
         this.isFromLeft = isFromLeft;
         movementSpeed = 2;
         monsterCurrentFrame = 0;
+        startingPoint = new Point(startingX, startingY);
+        targetPoint = new Point((int) (diamond.getLayoutX() + diamond.getFitWidth() / 2 - monsterFrameWidth / 2),
+                (int) (diamond.getLayoutY() + diamond.getFitHeight() / 2 - monsterFrameHeight / 2));
 
         // Starting position; 1061 and 627 is the width and height of battleContainer
         monsterGroup.setLayoutX(startingX);
@@ -61,15 +60,23 @@ public class BasicMonster extends Monster {
     }
 
     public BasicMonster(Quiz quiz, boolean isYellow, boolean isFromLeft) {
-        this(quiz, isYellow, isFromLeft, isFromLeft ? - (double) 820 / 6 : 1061, random.nextInt(628));
+        this(quiz, isYellow, isFromLeft, isFromLeft ? - 820 / 6 : 1061, random.nextInt(628));
     }
 
     public Quiz getQuiz() {
         return quiz;
     }
 
-    public boolean getIsFromLeft() {
-        return isFromLeft;
+    Point getStartingPoint() {
+        return startingPoint;
+    }
+
+    void setTargetPoint(Point targetPoint) {
+        this.targetPoint = targetPoint;
+    }
+
+    ImageView getFireImageView() {
+        return fireImageView;
     }
 
     @Override
@@ -81,13 +88,15 @@ public class BasicMonster extends Monster {
         animateTimeline.play();
 
         Timeline moveTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.05), e -> updateMonsterMovement())
+                new KeyFrame(Duration.seconds(0.05), e -> updateMonsterMovement(null))
         );
         moveTimeline.setCycleCount(Timeline.INDEFINITE);
         moveTimeline.play();
 
         Timeline attackTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(timeBetweenTwoAttacks), e -> attack())
+                new KeyFrame(Duration.seconds(timeBetweenTwoAttacks), e -> attack(() -> {
+                    MonsterHunterController.power = Math.max(0, MonsterHunterController.power - 3);
+                }))
         );
         attackTimeline.setCycleCount(Timeline.INDEFINITE);
         attackTimeline.play();
@@ -97,11 +106,42 @@ public class BasicMonster extends Monster {
         monsterTimeline.add(attackTimeline);
     }
 
+    void updateMonsterMovement(Runnable onStandingStill) {
+        double currentX = monsterGroup.getLayoutX();
+        double currentY = monsterGroup.getLayoutY();
+
+        double deltaX = targetPoint.x - currentX;
+        double deltaY = targetPoint.y - currentY;
+
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if (distance < 75) {
+            if (onStandingStill != null) {
+                onStandingStill.run();
+            }
+
+            return;
+        }
+
+        double ratioX = deltaX / distance;
+        double ratioY = deltaY / distance;
+
+        monsterGroup.setLayoutX(currentX + ratioX * movementSpeed);
+        monsterGroup.setLayoutY(currentY + ratioY * movementSpeed);
+    }
+
+    @Override
+    public void checkAnswer(List<Monster> monsterList, int index, String userAnswer) {
+        if (quiz.isCorrectAnswer(userAnswer)) {
+            beShot();
+            monsterList.remove(index);
+            MonsterHunterController.power = Math.min(100, MonsterHunterController.power + 5);
+        }
+    }
+
     @Override
     public void beShot() {
         stopMonsterTimeline();
-
-        movementSpeed = 0;
 
         Image bloodImage = new Image(String.valueOf(getClass().getResource("/pictureContainer/blood-effect.png")));
         bloodImageView = new ImageView(bloodImage);
@@ -147,56 +187,7 @@ public class BasicMonster extends Monster {
         bloodAnimation.play();
     }
 
-    @Override
-    public void beFrozen(Map<Monster, ImageView> freezeImageViews, int awardActivationTime) {
-        super.beFrozen(freezeImageViews, awardActivationTime);
-
-        ImageView freezeImageView = freezeImageViews.get(this);
-
-        if (!isFromLeft) {
-            freezeImageView.setScaleX(-1);
-            freezeImageView.setLayoutX(getMonsterGroup().getLayoutX() - (double) 601 / 3 + 50);
-        } else {
-            freezeImageView.setLayoutX(getMonsterGroup().getLayoutX() + (double) 820 / 6 - 50);
-        }
-        freezeImageView.setLayoutY(getMonsterGroup().getLayoutY() - 20);
-    }
-
-    @Override
-    void updateMonsterFrame() {
-        super.updateMonsterFrame();
-
-        if (isFromLeft) {
-            monsterImageView.setScaleX(1);
-        } else {
-            monsterImageView.setScaleX(-1);
-        }
-    }
-
-    void updateMonsterMovement() {
-        double xCenter = diamond.getLayoutX() + diamond.getFitWidth() / 2 - monsterFrameWidth / 2;
-        double yCenter = diamond.getLayoutY() + diamond.getFitHeight() / 2 - monsterFrameHeight / 2;
-
-        double currentX = monsterGroup.getLayoutX();
-        double currentY = monsterGroup.getLayoutY();
-
-        double deltaX = xCenter - currentX;
-        double deltaY = yCenter - currentY;
-
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        if (distance < 75) {
-            return;
-        }
-
-        double ratioX = deltaX / distance;
-        double ratioY = deltaY / distance;
-
-        monsterGroup.setLayoutX(currentX + ratioX * movementSpeed);
-        monsterGroup.setLayoutY(currentY + ratioY * movementSpeed);
-    }
-
-    private void attack() {
+    void attack(Runnable onFinished) {
         fireImageView.setFitWidth(fireFrameWidth);
         fireImageView.setFitHeight(fireFrameHeight);
 
@@ -236,8 +227,8 @@ public class BasicMonster extends Monster {
 
                     fireCurrentFrame++;
 
-                    if (fireCurrentFrame == 7) {
-                        MonsterHunterController.power = Math.max(0, MonsterHunterController.power - 5);
+                    if (fireCurrentFrame == 7 && onFinished != null) {
+                        onFinished.run();
                     }
 
                     if (fireCurrentFrame >= fireTotalFrames) {
@@ -250,5 +241,23 @@ public class BasicMonster extends Monster {
 
         fireAnimation.setCycleCount(fireTotalFrames);
         fireAnimation.play();
+    }
+
+    private void updateMonsterFrame() {
+        int row = monsterCurrentFrame / monsterFrameColumn;
+        int col = monsterCurrentFrame % monsterFrameColumn;
+
+        monsterImageView.setViewport(
+                new javafx.geometry.Rectangle2D(
+                        col * monsterFrameWidth, row * monsterFrameHeight, monsterFrameWidth, monsterFrameHeight)
+        );
+
+        monsterCurrentFrame = (monsterCurrentFrame + 1) % monsterTotalFrames;
+
+        if (isFromLeft) {
+            monsterImageView.setScaleX(1);
+        } else {
+            monsterImageView.setScaleX(-1);
+        }
     }
 }

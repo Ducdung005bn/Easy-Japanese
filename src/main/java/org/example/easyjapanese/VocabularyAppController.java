@@ -43,7 +43,7 @@ public class VocabularyAppController {
 
         // Add a listener to handle item selection in the TreeView
         itemMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            InterfaceHandler.removeAllRemainings(); //remove all sounds and timelines
+            InterfaceHandler.removeRemainings(); //remove all sounds and timelines
 
             if (newVal.getValue().equals("Flashcard")) {
                 showFlashcard(newVal);
@@ -63,6 +63,16 @@ public class VocabularyAppController {
                 quizList.add(new Quiz("上司", "じょうし", null, null));
                 quizList.add(new Quiz("相手", "あいて", null, null));
                 quizList.add(new Quiz("知り合い", "しりあい", null, null));
+                quizList.add(new Quiz("友人", "ゆうじん", null, null));
+                quizList.add(new Quiz("仲", "なか", null, null));
+                quizList.add(new Quiz("生年月日", "せいねんがっぴ", null, null));
+                quizList.add(new Quiz("誕生", "たんじょう", null, null));
+                quizList.add(new Quiz("年", "とし", null, null));
+                quizList.add(new Quiz("出身", "しゅっしん", null, null));
+                quizList.add(new Quiz("故郷", "こきょう", null, null));
+                quizList.add(new Quiz("成長", "せいちょう", null, null));
+                quizList.add(new Quiz("成人", "せいじん", null, null));
+                quizList.add(new Quiz("合格", "ごうかく", null, null));
 
                 MonsterHunterController.quizList = quizList;
 
